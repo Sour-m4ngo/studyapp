@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#DC143C"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:text="添加待办"
+                android:textColor="#ffffff"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:layout_gravity="center" />
+
+            <Button
+                android:id="@+id/btn_notes_exit"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:background="@drawable/wrong"/>
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_notes_finish"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:background="@drawable/right" />
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="20dp"/>
+
+            <EditText
+                android:id="@+id/et_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="请输入目标内容"
+                android:maxLength="40"
+                android:textColorHint="#DC143C" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/model_choose"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_notes_select_target"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#FFA07A"
+                android:text="目标制定" />
+
+            <Button
+                android:id="@+id/btn_notes_select_habit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#B1B0B0"
+                android:text="习惯养成" />
+        </LinearLayout>
+        <!--下面是选择目标制定的展开内容-->
+        <LinearLayout
+            android:id="@+id/ll_notes_target"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:layout_weight="1"
+            >
+
+            <LinearLayout
+                android:layout_width="382dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="该目标完成于" />
+                <Button
+                    android:id="@+id/btn_notes_target_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:text="设定目标时间"
+                    android:textColor="#DC143C" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="之前" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--下面是选择习惯养成的展开内容（默认android:visibility="gone"）-->
+        <LinearLayout
+            android:id="@+id/ll_notes_habit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:text="工作频率"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Spinner
+                    android:id="@+id/spi_notes_work_frequency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:entries="@array/time_frequency"/>
+            </LinearLayout>
+        </LinearLayout>
+        <!--下面是通用填写部分-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <TextView
+                    android:text="你需要"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:id="@+id/et_notes_workTimes"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:hint="填写工作次数"
+                    android:textColorHint="#DC143C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+
+                    android:text="次工作来完成这个目标"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                >
+                <!--下面这个控件我也不知道叫什么好随便取了个id，用来在两个按钮切换的时候改变下面的文字-->
+                <TextView
+                    android:id="@+id/tv_notes_t"
+                    android:text="一共完成"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:id="@+id/et_notes_workHours"
+                    android:inputType="numberDecimal"
+                    android:hint="填写时长"
+                    android:maxLines="1"
+                    android:textColor="#DC143C"
+                    android:textColorHint="#DC143C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <Spinner
+                    android:id="@+id/spi_notes_UnitOfTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:entries="@array/time_type"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

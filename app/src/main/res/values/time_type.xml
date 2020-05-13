@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="time_type">
+        <item>小时</item>
+        <item>分钟</item>
+    </string-array>
+    
+    <string-array name="time_frequency">
+        <item>每天</item>
+        <item>每周</item>
+        <item>每月</item>
+    </string-array>
+</resources>
