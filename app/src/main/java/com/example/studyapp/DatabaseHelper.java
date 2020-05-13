@@ -18,8 +18,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d(TAG,"创建数据库...");
         //创建字段
         //sql: create table table_name(date varchar,time integer,times integer);
-        String sql = "create table "+ Constants.TABLE_NAME+"(Years integer,Months integer,Days integer,time integer,times integer)";
-        db.execSQL(sql);
+        String sql1 = "create table "+ Constants.TABLE_NAME+"(Years integer,Months integer,Days integer,time integer,times integer)";
+        String sql2 = "create table "+ Constants.TABLE_NAME2+"(Number integer,Category integer,Content string,Sumtime integer,Donetime integer,DDLYears integer,DDLMonths integer,DDLDays integer,Frequency string,FnlYears integer,FnlMonths integer,FnlDays integer)";
+        String sql3 = "create table "+ Constants.TABLE_NAME3+"(CtnDays integer,Credits integer)";
+        db.execSQL(sql1);
+        db.execSQL(sql2);
+        db.execSQL(sql3);
     }
 
     @Override
