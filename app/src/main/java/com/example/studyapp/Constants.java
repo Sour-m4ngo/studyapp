@@ -6,4 +6,5 @@ public class Constants {
     public static final String TABLE_NAME="TimeRecord";
     public static final String TABLE_NAME2="ToDoItem";
     public static final String TABLE_NAME3="Achievement";
+    //注释
 }
