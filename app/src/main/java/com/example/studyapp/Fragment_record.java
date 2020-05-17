@@ -34,6 +34,17 @@ public class Fragment_record extends Fragment {
         listView = view.findViewById(R.id.lv1);
         headView1= view.findViewById(R.id.lineView) ;
         listView.setAdapter(adapter);
+        //初始界面显示
+        listView.setAdapter(null);
+        adapter=new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);//创建适配器对象
+        listView.setAdapter(adapter);
+        dao.getdataW(adapter);//获取周专注数据
+        //定义xy坐标
+        List<String> xList1=new ArrayList<String>(){} ;
+        List<Float> yList1=new ArrayList<Float>(){};
+        dao.getLviewW(xList1,yList1);
+        headView1.setData(xList1,yList1);
+
         //点击事件rbt1
         mBtnButton1 =(Button) view.findViewById(R.id.rbt1);
         mBtnButton1.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +80,7 @@ public class Fragment_record extends Fragment {
                 headView1.setData(xList2,yList2);
             }
         });
+
         //点击事件rbt3
         mBtnButton3 =(Button) view.findViewById(R.id.rbt3);
         mBtnButton3.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +98,6 @@ public class Fragment_record extends Fragment {
                 headView1.setData(xList3,yList3);
             }
         });
-        dao.getdata(adapter);
         return view;
     }
 
