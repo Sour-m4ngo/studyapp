@@ -15,7 +15,7 @@ public class TimeActivity extends AppCompatActivity {
     Calendar cal= Calendar.getInstance();//获取系统时间
     int year=cal.get(Calendar.YEAR);
     int month=cal.get(Calendar.MONTH)+1;
-    int day=cal.get(Calendar.DATE)+1;
+    int day=cal.get(Calendar.DATE);
     int wekday=cal.get(Calendar.DAY_OF_WEEK);
 
     @Override
@@ -47,6 +47,19 @@ public class TimeActivity extends AppCompatActivity {
                 else//没有学习记录，创建学习记录
                 {
                     dao.insert(year,month,day,(int)finalTime);
+                }
+                if(dao.isAddCtn(year, month, day)){
+                    if(day==1) //查询是否连续学习连续学习则天数+1
+                    {
+                        dao.recCtnDays(year,month,day);
+                    }
+                    else if(dao.isCtnDays(year, month, day - 1)){
+                        int Ctndays = dao.getCtnDays(year, month, day-1);
+                        dao.addCtnDays(year,month,day, Ctndays);
+                    }
+                    else{
+                        dao.recCtnDays(year,month,day);
+                    }
                 }
             }
         }

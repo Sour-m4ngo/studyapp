@@ -22,6 +22,7 @@ public class Dao {
 
     }
 
+
     //插入信息
     public void insert(int year, int month, int day, int time) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
@@ -66,6 +67,25 @@ public class Dao {
 
     }
 
+
+    public void recCtnDays(int year, int month, int day) {  //修改数据库学习天数为1
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql1 = "update " + Constants.TABLE_NAME + " set CtnDays=" + 1 + " where Years=" + year + " and Months=" + month + " and Days=" + day;
+        db.execSQL(sql1);
+        Log.d(TAG, "日期" + day);
+        db.close();
+    }
+
+    public void addCtnDays(int year, int month, int day, int ctnDays) {     //修改数据库学习天数+1
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        ctnDays = ctnDays + 1;
+        String sql1 = "update " + Constants.TABLE_NAME + " set CtnDays=" + ctnDays + " where Years=" + year + " and Months=" + month + " and Days=" + day;
+        db.execSQL(sql1);
+        db.close();
+    }
+
+
+
     //查询
     public boolean query(int year, int month, int day) {
         Log.d(TAG, "年月日" + year + " " + month + " " + day);
@@ -84,7 +104,44 @@ public class Dao {
             return false;
         }
     }
-
+    public boolean isCtnDays(int year, int month, int day) {    //判断某一天是否有在学习
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql = "Select * from " + Constants.TABLE_NAME + " where Years=" + year + " and Months=" + month + " and Days=" + day;
+        Cursor cursor = db.rawQuery(sql, null);
+        if(cursor.moveToFirst()){
+            if (cursor.getInt(cursor.getColumnIndex("CtnDays")) > 0) {
+                cursor.close();
+                db.close();
+                return true;
+            } else {
+                cursor.close();
+                db.close();
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+    public boolean isAddCtn(int year, int month, int day) {     //判断某一天是否满足计入学习天数+1条件（当日学习时间不少于30分钟）
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql = "Select * from " + Constants.TABLE_NAME + " where Years=" + year + " and Months=" + month + " and Days=" + day;
+        Cursor cursor = db.rawQuery(sql, null);
+        if(cursor.moveToFirst()){
+            if (cursor.getInt(cursor.getColumnIndex("time")) >= 30) {
+                cursor.close();
+                db.close();
+                return true;
+            } else {
+                cursor.close();
+                db.close();
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
     //获取数据进行显示
     public void getdata(ArrayAdapter<String> adapter) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
@@ -106,6 +163,17 @@ public class Dao {
             } while (cursor.moveToNext());
         }
         cursor.close();
+    }
+
+    public int getCtnDays(int year, int month, int day) {   //获取某天连续学习天数
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql = "Select * from " + Constants.TABLE_NAME +" where Years=" + year + " and Months=" + month + " and Days=" + day;
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        int Ctn = cursor.getInt(cursor.getColumnIndex("CtnDays"));
+        cursor.close();
+        //Log.d(TAG, "数据项数" + cursor.getCount());
+        return  Ctn;
     }
 
     //获取本周数据进行显示
