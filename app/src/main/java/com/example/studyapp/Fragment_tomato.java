@@ -36,7 +36,7 @@ public class Fragment_tomato extends Fragment {
                 if(text.isEmpty())
                 {
                     Log.d(Tag,"进入if");
-                    Toast.makeText(getContext(),"请输入数字",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"请输入时间",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {

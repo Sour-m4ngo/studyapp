@@ -2,6 +2,8 @@ package com.example.studyapp;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +19,12 @@ public class TimeActivity extends AppCompatActivity {
     int month=cal.get(Calendar.MONTH)+1;
     int day=cal.get(Calendar.DATE);
     int wekday=cal.get(Calendar.DAY_OF_WEEK);
-
+    private Handler handlerp = new Handler(){
+        public void handleMessage(Message msg) {
+            if (msg.what==1)
+                finish();
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,8 +73,12 @@ public class TimeActivity extends AppCompatActivity {
                         dao.recCtnDays(year,month,day);
                     }
                 }
+                Message msg = new Message();
+                msg.what= 1;
+                handlerp.sendMessage(msg);
             }
-        }
-                .start();
+
+        }.start();
+
     }
 }

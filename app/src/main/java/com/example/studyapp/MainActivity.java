@@ -37,7 +37,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DatabaseHelper helper=new DatabaseHelper(this);
-        //testtttttt
         helper.getWritableDatabase();
         initView();//初始化页面
         initEvents();//初始化点击事件

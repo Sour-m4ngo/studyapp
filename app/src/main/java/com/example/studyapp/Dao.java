@@ -419,4 +419,27 @@ public class Dao {
             cursor.close();
         }
     }
+
+    public void SaveNoteData (Notes note){
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("Type",note.getType());//待办种类0是目标，1是习惯
+        values.put("Content",note.getNotesContent());//待办内容
+        values.put("Totaltime",note.getTotalTime());//总时长
+        values.put("UnitOfTime",note.getUnitOfTime());
+        values.put("HaveFinishedtime",note.getHaveFinishMinutes());//剩余时长，包括习惯中单次剩余时长和目标中的总剩余时长
+//        values.put("FnlYears",note.);
+//        values.put("FnlMonths",note.);
+//        values.put("FnlDays",note.);
+        if (note.getType() == "0"){//截止时间
+            values.put("FinishYears",note.getFinishDate()[0]);//年份
+            values.put("FinishMonths",note.getFinishDate()[1]);//月份
+            values.put("FinishDays",note.getFinishDate()[2]);//日期
+        }else {
+            values.put("Frequency",note.getWorkFrequency());
+        }
+
+        db.insert(Constants.TO_DO_ITEM, null, values);
+    }
 }

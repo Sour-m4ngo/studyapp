@@ -19,7 +19,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //创建字段
         //sql: create table table_name(date varchar,time integer,times integer);
         String sql1 = "create table "+ Constants.TABLE_NAME+"(Years integer,Months integer,Days integer,time integer,times integer,CtnDays integer,Credits integer)";
-        String sql2 = "create table "+ Constants.TABLE_NAME2+"(Number integer,Category integer,Content string,Sumtime integer,Donetime integer,DDLYears integer,DDLMonths integer,DDLDays integer,Frequency string,FnlYears integer,FnlMonths integer,FnlDays integer)";
+        String sql2 = "create table "+ Constants.TO_DO_ITEM+"(Type string,Content string,Totaltime integer,HaveFinishedtime integer,FinishYears integer,FinishMonths integer,FinishDays integer,Frequency string,UnitOfTime string)";
+        //FnlYears integer,FnlMonths integer,FnlDays integer,
         db.execSQL(sql1);
         db.execSQL(sql2);
     }
