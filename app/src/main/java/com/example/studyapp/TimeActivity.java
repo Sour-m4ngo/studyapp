@@ -48,16 +48,21 @@ public class TimeActivity extends AppCompatActivity {
                 {
                     dao.insert(year,month,day,(int)finalTime);
                 }
-                if(dao.isAddCtn(year, month, day)){
-                    if(day==1) //查询是否连续学习连续学习则天数+1
+
+                //本日连续学习天数修改
+                if(dao.isAddCtn(year, month, day))  //学满30分钟，修改连续学习天数
+                {
+                    if(day==1) //月初连续天数置为1
                     {
                         dao.recCtnDays(year,month,day);
                     }
-                    else if(dao.isCtnDays(year, month, day - 1)){
+                    else if(dao.isCtnDays(year, month, day - 1))  //前一天学习，本日连续学习天数记录+1
+                    {
                         int Ctndays = dao.getCtnDays(year, month, day-1);
                         dao.addCtnDays(year,month,day, Ctndays);
                     }
-                    else{
+                    else   //前一天未学习，连续学习天数重置
+                        {
                         dao.recCtnDays(year,month,day);
                     }
                 }
@@ -65,6 +70,4 @@ public class TimeActivity extends AppCompatActivity {
         }
                 .start();
     }
-
-
 }
