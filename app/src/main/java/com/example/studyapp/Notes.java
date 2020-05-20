@@ -92,4 +92,36 @@ public class Notes implements Serializable {
     public void setCreateDate(int[] createDate) {
         CreateDate = createDate;
     }
+
+    public String getNotesType() {
+        return NotesType;
+    }
+
+    public void setNotesType(String notesType) {
+        NotesType = notesType;
+    }
+
+    public int getHaveFinishMinutes() {
+        return HaveFinishMinutes;
+    }
+
+    public void setHaveFinishMinutes(int haveFinishMinutes) {
+        HaveFinishMinutes = haveFinishMinutes;
+    }
+
+    public int getResMinutes() {
+        return ResMinutes;
+    }
+
+    public void setResMinutes(int resMinutes) {
+        ResMinutes = resMinutes;
+    }
+
+    public int getFinishedTimes() {
+        return FinishedTimes;
+    }
+
+    public void setFinishedTimes(int finishedTimes) {
+        FinishedTimes = finishedTimes;
+    }
 }

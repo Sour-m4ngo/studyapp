@@ -3,21 +3,23 @@ package com.example.studyapp;
 import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 
 import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
-
     private List<Notes> mNotesList;
-    private OnRecyclerViewItemClickListener mOnItemClickListener = null;
+    protected static final int REUEST_CODE = 1;
+    private OnRecyclerViewItemClickListener mOnItemClickListener ;
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
         this.mOnItemClickListener = listener;
     }
@@ -28,7 +30,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     }
 
     public interface OnRecyclerViewItemClickListener {
-        void onClick(View view, ViewName viewName, int position);
+        void onClick(View view, int position);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -37,6 +39,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         TextView NotesProgress;//进度
         Button BtnStartTomato;
         RoundCornerProgressBar NotePorgressBar;//进度条
+
         int i =0;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -50,11 +53,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.btn_notes_start :
 
-                    break;
-            }
         }
     }
     public NotesAdapter (List<Notes> notesList){//构造函数，用于传入需要展示的数据。
@@ -85,7 +84,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         else{
             viewHolder.NotesProgress.setText(notes.getWorkFrequency()+" "+notes.getTotalTime()+"  "+notes.getUnitOfTime());
         }
+        if (mOnItemClickListener != null) {
+            viewHolder.BtnStartTomato.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnItemClickListener.onClick(view, position);
+                }
+            });
 
+        }
         //viewHolder.
     }
 

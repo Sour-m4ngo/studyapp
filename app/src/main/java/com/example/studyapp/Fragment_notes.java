@@ -24,6 +24,7 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
     private AlertDialog AlertDialog = null;
     private AlertDialog.Builder Builder_AlterDialog;
     private DialogFragment_AddNotes dialogFragment_addNotes;
+    private DialoFragment_startCount dialoFragmentStartCount ;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager ;
     private NotesAdapter adapter;
@@ -44,7 +45,9 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
         btn_add = view.findViewById(R.id.add_FloatActBtn);
         btn_add.setOnClickListener(this);
         dialogFragment_addNotes = new DialogFragment_AddNotes();
+        dialoFragmentStartCount = new DialoFragment_startCount();
        initView();
+       initAdapter();
        //initData();
        return view;
 
@@ -68,10 +71,20 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
     }
     private void initView(){
         recyclerView= view.findViewById(R.id.recycler_view);
+    }
+    private void initAdapter (){
         adapter = new NotesAdapter(mNotes);
         recyclerView.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(this.getContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
+        adapter.setOnItemClickListener(new NotesAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Toast.makeText(getActivity(),"ttttt",Toast.LENGTH_SHORT).show();
+                dialoFragmentStartCount.setTargetFragment(Fragment_notes.this,0);
+                dialoFragmentStartCount.show(getFragmentManager(),"StartDialogFragment");
+            }
+        });
     }
     private void initData(){
         for(int i = 0;i<5;i++){
@@ -100,6 +113,8 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
             tNotes.setWorkFrequency(workFrequency);
             tNotes.setUnitOfTime(unitOfTime);
             tNotes.setFinishDate(finishDate);
+            Dao dao = new Dao(getContext());
+            dao.SaveNoteData(tNotes);
             mNotes.add(tNotes);
         }
     }
