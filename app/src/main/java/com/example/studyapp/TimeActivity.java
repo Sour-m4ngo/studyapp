@@ -68,6 +68,36 @@ public class TimeActivity extends AppCompatActivity {
                         dao.recCtnDays(year,month,day);
                     }
                 }
+
+                if(dao.getCtnDays(year, month, day) == 1){
+                    if(dao.getCredits(year, month) == 0){
+                        //credits = 11.5 + time * 0.5 / 30;
+                        int time = dao.getTime(year, month, day);
+                        int totaltimes = (int)(time / 30);
+                        double credits =dao.calCredits(0, 1, totaltimes);
+                        dao.setCredits(year, month, day, credits);
+                    }
+                    else if(dao.getCredits(year, month) > 0){
+                        //credits = credits + 11.5 + time * 0.5 / 30;
+                        int time = dao.getTime(year, month, day);
+                        double credits = dao.getCredits(year, month);
+                        int totaltimes = (int)(time / 30);
+                        credits =dao.calCredits(credits, 1, totaltimes);
+                        dao.setCredits(year, month, day, credits);
+                    }
+                }
+                else if(dao.getCtnDays(year, month, day) > 1){
+                    int time = dao.getTime(year, month, day);
+                    int totaltimes = (int)(time / 30);
+                    double credits = dao.getCredits(year, month);
+                    int ctndays = dao.getCtnDays(year, month, day);
+                    credits =dao.calCredits(credits, ctndays, totaltimes);
+                    dao.setCredits(year, month, day, credits);
+                    //credits = credits +10 + 1.5 * (CtnDays + 1) + z * 0.5 /30
+
+
+                }
+
                 Message msg = new Message();
                 msg.what= 1;
                 handlerp.sendMessage(msg);
