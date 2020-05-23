@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -423,8 +424,7 @@ public class Dao {
     public void SaveNoteData (Notes note){
         SQLiteDatabase db = mHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-
-        values.put("Type",note.getType());//待办种类0是目标，1是习惯
+        values.put("Type",note.getType());//待办类型
         values.put("Content",note.getNotesContent());//待办内容
         values.put("Totaltime",note.getTotalTime());//总时长
         values.put("UnitOfTime",note.getUnitOfTime());
@@ -432,14 +432,45 @@ public class Dao {
 //        values.put("FnlYears",note.);
 //        values.put("FnlMonths",note.);
 //        values.put("FnlDays",note.);
-        if (note.getType() == "0"){//截止时间
+        if (note.getType().equals("目标")){//截止时间
             values.put("FinishYears",note.getFinishDate()[0]);//年份
             values.put("FinishMonths",note.getFinishDate()[1]);//月份
             values.put("FinishDays",note.getFinishDate()[2]);//日期
         }else {
             values.put("Frequency",note.getWorkFrequency());
         }
-
         db.insert(Constants.TO_DO_ITEM, null, values);
+
+    }
+    public ArrayList<Notes> getNoteData(){
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        ArrayList<Notes> backNote = new ArrayList<Notes> ();
+        Cursor cursor = db.query(true,Constants.TO_DO_ITEM,null,null,null,null,null,null,null);
+        if (cursor.moveToFirst()){
+            do{
+                String Type = cursor.getString(cursor.getColumnIndex("Type"));
+                String Content = cursor.getString(cursor.getColumnIndex("Content"));
+                int Totaltime = cursor.getInt(cursor.getColumnIndex("Totaltime"));
+                String UnitOfTime = cursor.getString(cursor.getColumnIndex("UnitOfTime"));
+                int HaveFinishedtime = cursor.getInt(cursor.getColumnIndex("HaveFinishedtime"));
+                Log.d(TAG, "aaaaaaaaaaaaaaaaaaaaaaaaaaaa"+Type);
+                if (Type.equals("目标")){
+                    int FinishYears = cursor.getInt(cursor.getColumnIndex("FinishYears"));
+                    int FinishMonths = cursor.getInt(cursor.getColumnIndex("FinishMonths"));
+                    int FinishDays = cursor.getInt(cursor.getColumnIndex("FinishDays"));
+                    int [] finishDate = new int[]{FinishYears,FinishMonths,FinishDays};//完成日期，年月日
+                    Log.d(TAG, "ttttttttttttttttttttttttt"+Content+finishDate[0]+finishDate[1]+finishDate[2]);
+                    //String  Content,String type,int totalTime,String unitOfTime,int haveFinishMinutes,int[] finishDate
+                    Notes note = new Notes(Content,Type,Totaltime,UnitOfTime,HaveFinishedtime,finishDate);
+                    backNote.add(note);
+                }else {
+                    String Frequency = cursor.getString(cursor.getColumnIndex("Frequency"));
+                    Notes note = new Notes(Content,Type,Totaltime,UnitOfTime,HaveFinishedtime,Frequency);
+                    backNote.add(note);
+                }
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return backNote;
     }
 }

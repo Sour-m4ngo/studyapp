@@ -227,7 +227,7 @@ public class DialogFragment_AddNotes extends DialogFragment implements View.OnCl
         NotesContent = EtNotes.getText().toString();
         TotalTime =EtWorkHours.getText().toString();
         FinishDate[0] = mYear;
-        FinishDate[1] = mMonth;
+        FinishDate[1] = mMonth+1;
         FinishDate[2] = mDay;
 
     }

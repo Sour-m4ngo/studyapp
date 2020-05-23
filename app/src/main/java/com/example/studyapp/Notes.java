@@ -25,12 +25,22 @@ public class Notes implements Serializable {
         FinishDate = finishDate.clone();
         CreateDate = createDate.clone();
     };
-    Notes(String  Content,String type,int totalTime,String unitOfTime){
+
+    Notes(String  Content,String type,int totalTime,String unitOfTime,int haveFinishMinutes,int[] finishDate){
         NotesContent = Content;
         NotesType = type;
         TotalTime = totalTime;
         UnitOfTime = unitOfTime;
-
+        HaveFinishMinutes = haveFinishMinutes;
+        FinishDate = finishDate;
+    };
+    Notes(String  Content,String type,int totalTime,String unitOfTime,int haveFinishMinutes,String frequency){
+        NotesContent = Content;
+        NotesType = type;
+        TotalTime = totalTime;
+        UnitOfTime = unitOfTime;
+        HaveFinishMinutes = haveFinishMinutes;
+        WorkFrequency = frequency;
     };
     Notes (String Content,String type){
         NotesContent = Content;
