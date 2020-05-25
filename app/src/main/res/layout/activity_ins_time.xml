@@ -5,23 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#ADD8E6"
     tools:context=".Fragment_tomato">
-    
+
     <EditText
         android:id="@+id/ET1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:height="40sp"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
         android:layout_centerVertical="true"
-        android:hint="请输入专注时间（分）"
-        android:inputType="number"/>
+        android:layout_marginTop="425dp"
+        android:height="40sp"
+        android:hint="                        请输入专注时间（分）"
+        android:inputType="number"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="#06F" />
 
     <Button
         android:id="@+id/btn_button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="确认"
-        />
+        android:layout_marginTop="25dp"
+        android:background="#87CEBB"
+        android:text="确认" />
 </LinearLayout>
