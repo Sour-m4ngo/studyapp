@@ -469,7 +469,7 @@ public class Dao {
                     backNote.add(note);
                 }
             }while (cursor.moveToNext());
-        }
+        }//ooooooooooooo
         cursor.close();
         return backNote;
     }
