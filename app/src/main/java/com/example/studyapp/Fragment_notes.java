@@ -82,7 +82,7 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
         adapter.setOnItemClickListener(new NotesAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(getActivity(),"ttttt",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"ttttt",Toast.LENGTH_SHORT).show();//设置
                 dialoFragmentStartCount.setTargetFragment(Fragment_notes.this,0);
                 dialoFragmentStartCount.show(getFragmentManager(),"StartDialogFragment");
             }
