@@ -20,9 +20,6 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
     private ArrayList<Notes> mNotes = new ArrayList<Notes>();
     protected static final int REUEST_CODDE = 0;
     private View view;
-    private View view_AlertDialog;
-    private AlertDialog AlertDialog = null;
-    private AlertDialog.Builder Builder_AlterDialog;
     private DialogFragment_AddNotes dialogFragment_addNotes;
     private DialoFragment_startCount dialoFragmentStartCount ;
     private RecyclerView recyclerView;
@@ -81,16 +78,14 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
         recyclerView.setLayoutManager(layoutManager);
         adapter.setOnItemClickListener(new NotesAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void onClick(View view, int position) {
-                Toast.makeText(getActivity(),"ttttt",Toast.LENGTH_SHORT).show();
+            public void onClick(View view, int position) {//弹出学习时间窗口，输入后跳转至计时器
+                //Toast.makeText(getActivity(),"ttttt",Toast.LENGTH_SHORT).show();
                 dialoFragmentStartCount.setTargetFragment(Fragment_notes.this,0);
                 dialoFragmentStartCount.show(getFragmentManager(),"StartDialogFragment");
             }
         });
     }
-    private void initData(){
 
-    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -101,7 +96,7 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
             String totalTime = data.getStringExtra(DialogFragment_AddNotes.TOTALTIME);
             String unitOfTime = data.getStringExtra(DialogFragment_AddNotes.UNITOFTIME);
             String workFrequency = data.getStringExtra(DialogFragment_AddNotes.WORKFREQUENCY);
-            Toast.makeText(getActivity(), content+" "+type+" "+finishDate[2]+" "+totalTime+" "+unitOfTime+" ", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), content+" "+type+" "+finishDate[2]+" "+totalTime+" "+unitOfTime+" ", Toast.LENGTH_LONG).show();
             Notes tNotes= new Notes();
             tNotes.setNotesContent(content);
             tNotes.setType(type);
