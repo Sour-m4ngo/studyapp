@@ -36,7 +36,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView NotesContent;
         TextView NotesType;
-        TextView NotesProgress;//进度
+        TextView NotesProgress;//进度说明
         Button BtnStartTomato;
         RoundCornerProgressBar NotePorgressBar;//进度条
 
@@ -77,9 +77,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         viewHolder.NotePorgressBar.setProgressBackgroundColor(Color.parseColor("#D3D3D3"));
         viewHolder.NotePorgressBar.setMax(100);
         viewHolder.NotePorgressBar.setProgress(0);
-        if(notes.getType()=="目标"){
-            notes.getFinishDate()[1]=notes.getFinishDate()[1]+1;
-            viewHolder.NotesProgress.setText(notes.getFinishDate()[0]+"年"+notes.getFinishDate()[1]+"月"+notes.getFinishDate()[2]+"日"+"  "+"0/"+notes.getTotalTime()+" "+notes.getUnitOfTime());
+        if(notes.getType().equals("目标")){
+            //notes.getFinishDate()[1]=notes.getFinishDate()[1]+1;
+            int month =notes.getFinishDate()[1]+1;
+            viewHolder.NotesProgress.setText(notes.getFinishDate()[0]+"年"+month+"月"+notes.getFinishDate()[2]+"日"+"  "+notes.getHaveFinishMinutes()+"/"+notes.getTotalTime()+" "+notes.getUnitOfTime());
         }
         else{
             viewHolder.NotesProgress.setText(notes.getWorkFrequency()+" "+notes.getTotalTime()+"  "+notes.getUnitOfTime());

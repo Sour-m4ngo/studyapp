@@ -73,6 +73,8 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
         recyclerView= view.findViewById(R.id.recycler_view);
     }
     private void initAdapter (){
+        Dao dao = new Dao(getContext());
+        mNotes = dao.getNoteData();
         adapter = new NotesAdapter(mNotes);
         recyclerView.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(this.getContext(),LinearLayoutManager.VERTICAL,false);
@@ -87,12 +89,7 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
         });
     }
     private void initData(){
-        for(int i = 0;i<5;i++){
-            Notes tNotes= new Notes();
-            tNotes.setNotesContent("内容测试数据"+i);
-            tNotes.setType("类型测试"+i);
-            mNotes.add(tNotes);
-        }
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

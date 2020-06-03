@@ -12,21 +12,95 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/biaoti1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我的"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="我的成就"
             android:textColor="#ffffff"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center" />
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/biaoti2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="积分："
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/biaoti3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="距离下一段位："
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:textSize="60dp"
-        android:text="这是“我的” 页面"
+        android:text="青铜"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="60dp"
+        android:text="白银"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="60dp"
+        android:text="黄金"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="60dp"
+        android:text="白金"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="60dp"
+        android:text="钻石"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="60dp"
+        android:text="王者"
+        android:textStyle="bold"
         />
 
 </LinearLayout>
