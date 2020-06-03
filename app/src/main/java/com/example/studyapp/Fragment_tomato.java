@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 
 public class Fragment_tomato extends Fragment {
-    private long time1;
+    private int time1;
     private static final String Tag= "test";
     private Button mBtnButton;
     private EditText et_time;
@@ -31,7 +31,7 @@ public class Fragment_tomato extends Fragment {
             public void onClick(View view) {
                 //跳转到倒计时界面
                 Intent intent = new Intent(getContext(),TimeActivity.class);
-                String text=et_time.getText().toString().trim();
+                String text = et_time.getText().toString().trim();
                 //判断用户是否输入数字
                 if(text.isEmpty())
                 {
@@ -43,7 +43,7 @@ public class Fragment_tomato extends Fragment {
                     Log.d(Tag,"进入else");
                     time1 =Integer.parseInt(et_time.getText().toString());
                     Bundle bundle=new Bundle();
-                    bundle.putLong("num",time1);
+                    bundle.putInt("num",time1);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
