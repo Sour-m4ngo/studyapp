@@ -79,7 +79,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         viewHolder.NotePorgressBar.setProgress(0);
         if(notes.getType().equals("目标")){
             //notes.getFinishDate()[1]=notes.getFinishDate()[1]+1;
-            int month =notes.getFinishDate()[1]+1;
+            int month =notes.getFinishDate()[1];
             viewHolder.NotesProgress.setText(notes.getFinishDate()[0]+"年"+month+"月"+notes.getFinishDate()[2]+"日"+"  "+notes.getHaveFinishMinutes()+"/"+notes.getTotalTime()+" "+notes.getUnitOfTime());
         }
         else{
