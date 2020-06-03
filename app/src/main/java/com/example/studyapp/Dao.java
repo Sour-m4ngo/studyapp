@@ -77,6 +77,14 @@ public class Dao {
         db.close();
     }
 
+    public void setCredits(int year, int month, int day, double credits) {  //修改数据库学习天数为1
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql1 = "update " + Constants.TABLE_NAME + " set credits =" + credits + " where Years=" + year + " and Months=" + month + " and Days=" + day;
+        db.execSQL(sql1);
+        Log.d(TAG, "得分" + credits);
+        db.close();
+    }
+
     public void addCtnDays(int year, int month, int day, int ctnDays) {     //修改数据库学习天数+1
         SQLiteDatabase db = mHelper.getWritableDatabase();
         ctnDays = ctnDays + 1;
@@ -175,6 +183,54 @@ public class Dao {
         cursor.close();
         //Log.d(TAG, "数据项数" + cursor.getCount());
         return  Ctn;
+    }
+
+    public double calCredits(double lcredits, int ctndays, int totaltimes){
+        double credits;
+        if(totaltimes > 10){
+            if(ctndays > 10){
+                credits = lcredits + 10 + 1.5 * 10 + 10 * 0.5;
+            }
+            else{
+                credits = lcredits + 10 + 1.5 * ctndays + 10 * 0.5;
+            }
+        }
+        else{
+            if(ctndays > 10){
+                credits = lcredits + 10 + 1.5 * 10 + totaltimes * 0.5;
+            }
+            else{
+                credits = lcredits + 10 + 1.5 * ctndays + totaltimes * 0.5;
+            }
+        }
+        return credits;
+    }
+    public double getCredits(int year, int month) {   //获取某天连续学习天数
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql = "Select * from " + Constants.TABLE_NAME +" where Years=" + year + " and Months=" + month + " Order By Days desc";
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToNext();
+        while(cursor.moveToNext()){
+            double Credits = cursor.getDouble(cursor.getColumnIndex("Credits"));
+            cursor.close();
+            if(Credits != 0) {
+                Log.d(TAG, "今日得分" + Credits);
+                return Credits;
+            }
+        }
+        Log.d(TAG, "今日得分" + 0);
+        return 0;
+    }
+
+    public int getTime(int year, int month, int day) {   //获取某天连续学习天数
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql = "Select * from " + Constants.TABLE_NAME +" where Years=" + year + " and Months=" + month + " and Days=" + day;
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        int time = cursor.getInt(cursor.getColumnIndex("time"));
+        cursor.close();
+        //Log.d(TAG, "数据项数" + cursor.getCount());
+        return  time;
     }
 
     //获取本周数据进行显示
