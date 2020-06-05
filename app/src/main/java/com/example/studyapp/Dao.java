@@ -78,10 +78,15 @@ public class Dao {
         db.close();
     }
 
+    public void setCredits(int year, int month, int day, double credits) {  //修改数据库学习天数为1
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql1 = "update " + Constants.TABLE_NAME + " set credits =" + credits + " where Years=" + year + " and Months=" + month + " and Days=" + day;
+        db.execSQL(sql1);
+        Log.d(TAG, "得分" + credits);
+        db.close();
+    }
 
-
-    void addCtnDays(int year, int month, int day, int ctnDays)
-    {     //修改数据库学习天数+1
+    public void addCtnDays(int year, int month, int day, int ctnDays) {     //修改数据库学习天数+1
         SQLiteDatabase db = mHelper.getWritableDatabase();
         ctnDays = ctnDays + 1;
         String sql1 = "update " + Constants.TABLE_NAME + " set CtnDays=" + ctnDays + " where Years=" + year + " and Months=" + month + " and Days=" + day;
@@ -155,8 +160,12 @@ public class Dao {
         cursor.moveToFirst();
         int Ctn = cursor.getInt(cursor.getColumnIndex("CtnDays"));
         cursor.close();
-        //Log.d(TAG, "数据项数" + cursor.getCount());
-        return  Ctn;
+        if(Ctn != 0){
+            return Ctn;
+        }
+        else{
+            return  0;
+        }
     }
 
      double calCredits(double lcredits, int ctndays, int totaltimes){
@@ -184,18 +193,7 @@ public class Dao {
         }
         return credits;
     }
-
-     //修改积分
-    void setCredits(int year, int month, int day, double credits)
-    {
-        SQLiteDatabase db = mHelper.getWritableDatabase();
-        String sql1 = "update " + Constants.TABLE_NAME + " set credits =" + credits + " where Years=" + year + " and Months=" + month + " and Days=" + day;
-        db.execSQL(sql1);
-        Log.d(TAG, "得分" + credits);
-        db.close();
-    }
-     double getCredits(int year, int month)
-    {   //获取某天连续学习天数
+    public double getCredits(int year, int month) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql = "Select * from " + Constants.TABLE_NAME +" where Years=" + year + " and Months=" + month + " Order By Days desc";
         Cursor cursor = db.rawQuery(sql, null);

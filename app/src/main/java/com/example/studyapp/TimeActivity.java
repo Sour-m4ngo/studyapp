@@ -84,6 +84,12 @@ public class TimeActivity extends AppCompatActivity {
                             dao.recCtnDays(year,month,day);
                         }
                     }
+                    int time = dao.getTime(year, month, day);//获取当日学习时长
+                    double credits = dao.getCredits(year, month);//获取截至上一次学习为止的当月积分
+                    int totaltimes = (int)(time / 30);//触发单日增加积分的次数
+                    int ctndays = dao.getCtnDays(year, month, day);//获取连续学习天数
+                    credits =dao.calCredits(credits, ctndays, totaltimes);//计算变化后的当月积分
+                    dao.setCredits(year, month, day, credits);//记录当月积分
                     Message msg = new Message();
                     msg.what= 1;
                     handlerp.sendMessage(msg);
