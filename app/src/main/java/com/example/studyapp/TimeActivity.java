@@ -1,10 +1,12 @@
 package com.example.studyapp;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,15 @@ public class TimeActivity extends AppCompatActivity {
                 finish();
         }
     };
+
+    //监听返回键
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        //Toast.makeText(TimeActivity.this,"任务终止，扣除相应积分", Toast.LENGTH_SHORT).show();
+        //onDestroy();
+        System.exit(0);
+    }
 
     int time = 0;
     int timeFromNote = 0 ;
@@ -71,24 +82,30 @@ public class TimeActivity extends AppCompatActivity {
                     {
                         dao.insert(year,month,day,(int)finalTime);
                     }
-                    if(dao.isAddCtn(year, month, day)){
-                        if(day==1) //查询是否连续学习连续学习则天数+1
+
+                    //查询是否连续学习连续学习则天数+1
+                    if(dao.isAddCtn(year, month, day))   //是否学习时间超过30min
+                    {
+                        if(day==1) //本月第一天
                         {
-                            dao.recCtnDays(year,month,day);
+                            dao.recCtnDays(year,month,day); //重置
                         }
-                        else if(dao.isCtnDays(year, month, day - 1)){
+                        else if(dao.isCtnDays(year, month, day - 1)) //前一天学习，今日学习天数加一
+                        {
                             int Ctndays = dao.getCtnDays(year, month, day-1);
                             dao.addCtnDays(year,month,day, Ctndays);
                         }
-                        else{
+                        else  //前一天无学习记录，重置
+                            {
                             dao.recCtnDays(year,month,day);
                         }
                     }
                     int time = dao.getTime(year, month, day);//获取当日学习时长
                     double credits = dao.getCredits(year, month);//获取截至上一次学习为止的当月积分
-                    int totaltimes = (int)(time / 30);//触发单日增加积分的次数
+                    int totaltimes = time / 30;//触发单日增加积分的次数
                     int ctndays = dao.getCtnDays(year, month, day);//获取连续学习天数
                     credits =dao.calCredits(credits, ctndays, totaltimes);//计算变化后的当月积分
+                    Log.d("Credit","积分为"+credits);
                     dao.setCredits(year, month, day, credits);//记录当月积分
                     Message msg = new Message();
                     msg.what= 1;
