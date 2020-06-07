@@ -22,6 +22,7 @@ public class TimeActivity extends AppCompatActivity {
     int month=cal.get(Calendar.MONTH)+1;
     int day=cal.get(Calendar.DATE);
     int wekday=cal.get(Calendar.DAY_OF_WEEK);
+    double credits=0;
     private Handler handlerp = new Handler(){
         public void handleMessage(Message msg) {
             if (msg.what==1)
@@ -35,6 +36,16 @@ public class TimeActivity extends AppCompatActivity {
         super.onBackPressed();
         //Toast.makeText(TimeActivity.this,"任务终止，扣除相应积分", Toast.LENGTH_SHORT).show();
         //onDestroy();
+        Dao dao=new Dao(getApplicationContext());
+        credits = dao.getCredits(year, month);//获取截至上一次学习为止的当月积分
+        if(dao.isfisrtRecord(year,month)) //是本月第一条记录，直接修改本条记录中的积分
+        {
+            dao.minusCredits(year,month,day,credits-3);//修改本日积分
+        }
+        else //本月有上一次学习记录，修改上一次学习记录
+        {
+            dao.minuspreCredits(year,month,credits-3);//修改上次学习积分
+        }
         System.exit(0);
     }
 
@@ -49,6 +60,8 @@ public class TimeActivity extends AppCompatActivity {
         tv_Timer = findViewById(R.id.tv_timer1);
         Intent intent = getIntent();
         Bundle bundle= intent.getExtras();
+        Dao dao=new Dao(getApplicationContext());
+
         //int type = bundle.getInt("KET_TYPE");
         timeFromNote = bundle.getInt("DURATION");
         timeFromTomato = bundle.getInt("num");
@@ -57,6 +70,12 @@ public class TimeActivity extends AppCompatActivity {
             time = timeFromNote;
         }else {
             time = timeFromTomato;
+        }
+
+        if(!dao.query(year,month,day))//今日无记录，初始化今日学习记录
+        {
+            dao.insert(year,month,day);
+            Log.d("初始化","已经初始化今日学习记录");
         }
 
         time = time *1000;
@@ -73,15 +92,7 @@ public class TimeActivity extends AppCompatActivity {
                 @Override
                 public void onFinish() {
                     Toast.makeText(TimeActivity.this,"您已成功完成专注计划", Toast.LENGTH_SHORT).show();
-                    Dao dao=new Dao(getApplicationContext());
-                    if(dao.query(year,month,day)) //该日已有学习记录,对改日学习记录进行修改
-                    {
-                        dao.update(year,month,day,(int)finalTime);
-                    }
-                    else//没有学习记录，创建学习记录
-                    {
-                        dao.insert(year,month,day,(int)finalTime);
-                    }
+                    dao.update(year,month,day,(int)finalTime);//更新学习记录
 
                     //查询是否连续学习连续学习则天数+1
                     if(dao.isAddCtn(year, month, day))   //是否学习时间超过30min
@@ -101,7 +112,7 @@ public class TimeActivity extends AppCompatActivity {
                         }
                     }
                     int time = dao.getTime(year, month, day);//获取当日学习时长
-                    double credits = dao.getCredits(year, month);//获取截至上一次学习为止的当月积分
+                    credits = dao.getCredits(year, month);//获取截至上一次学习为止的当月积分
                     int totaltimes = time / 30;//触发单日增加积分的次数
                     int ctndays = dao.getCtnDays(year, month, day);//获取连续学习天数
                     credits =dao.calCredits(credits, ctndays, totaltimes);//计算变化后的当月积分

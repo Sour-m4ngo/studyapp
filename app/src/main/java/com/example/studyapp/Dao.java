@@ -23,9 +23,8 @@ public class Dao {
 
     }
 
-
     //插入信息
-     void insert(int year, int month, int day, int time) {
+    void insert(int year, int month, int day, int time) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
           /*String sql="insert into "+ Constants.TABLE_NAME +"(date,time,times,phone) values(?,?,?,?)";
           db.execSQL(sql,new Object[]{"2020.3.9",50,1});*/
@@ -37,6 +36,24 @@ public class Dao {
         values.put("Days", day);
         values.put("time", time);
         values.put("times", 1);
+        db.insert(Constants.TABLE_NAME, null, values);
+        db.close();
+    }
+
+    void insert(int year, int month, int day) {
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+          /*String sql="insert into "+ Constants.TABLE_NAME +"(date,time,times,phone) values(?,?,?,?)";
+          db.execSQL(sql,new Object[]{"2020.3.9",50,1});*/
+
+        ContentValues values = new ContentValues();
+        //添加数据
+        values.put("Years", year);
+        values.put("Months", month);
+        values.put("Days", day);
+        values.put("time", 0);
+        values.put("times", 0);
+        values.put("CtnDays", 0);
+        values.put("Credits", 0);
         db.insert(Constants.TABLE_NAME, null, values);
         db.close();
     }
@@ -78,15 +95,38 @@ public class Dao {
         db.close();
     }
 
-    public void setCredits(int year, int month, int day, double credits) {  //修改数据库学习天数为1
+    void setCredits(int year, int month, int day, double credits) {  //修改数据库学习天数为1
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql1 = "update " + Constants.TABLE_NAME + " set credits =" + credits + " where Years=" + year + " and Months=" + month + " and Days=" + day;
         db.execSQL(sql1);
         Log.d(TAG, "得分" + credits);
         db.close();
     }
+    void minusCredits(int year, int month,int day,double credits){
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        //修改积分
+        String sql1 = "update " + Constants.TABLE_NAME + " set credits =" + credits + " where Years=" + year + " and Months=" + month + " and Days=" + day;
+        db.execSQL(sql1);
+        Log.d(TAG, "退出任务后的得分" + credits);
+        db.close();
+    }
 
-    public void addCtnDays(int year, int month, int day, int ctnDays) {     //修改数据库学习天数+1
+    void minuspreCredits(int year, int month,double credits){
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql = "Select * from " + Constants.TABLE_NAME +" where Years=" + year + " and Months=" + month + " Order By Days desc";
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToNext();
+        cursor.moveToNext();//选择最新的一天
+        int day=cursor.getInt(cursor.getColumnIndex("Days"));
+        cursor.close();
+        //修改积分
+        String sql1 = "update " + Constants.TABLE_NAME + " set credits =" + credits + " where Years=" + year + " and Months=" + month + " and Days=" + day;
+        db.execSQL(sql1);
+        Log.d(TAG, "退出任务后的得分" + credits);
+        db.close();
+    }
+
+    void addCtnDays(int year, int month, int day, int ctnDays) {     //修改数据库学习天数+1
         SQLiteDatabase db = mHelper.getWritableDatabase();
         ctnDays = ctnDays + 1;
         String sql1 = "update " + Constants.TABLE_NAME + " set CtnDays=" + ctnDays + " where Years=" + year + " and Months=" + month + " and Days=" + day;
@@ -114,6 +154,25 @@ public class Dao {
             return false;
         }
     }
+
+    boolean isfisrtRecord(int year, int month) //查询是否为本月唯一一个记录
+    {
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql = "Select * from " + Constants.TABLE_NAME + " where Years=" + year + " and Months=" + month ;
+        //String sql="select * from "+ Constants.TABLE_NAME +" where Years=year and Months=month and Days=day" ;
+        Cursor cursor = db.rawQuery(sql, null);
+        Log.d(TAG, "数据项数" + cursor.getCount());
+        if (cursor.getCount() == 1) {
+            cursor.close();
+            db.close();
+            return true;
+        } else {
+            cursor.close();
+            db.close();
+            return false;
+        }
+    }
+
      boolean isCtnDays(int year, int month, int day) {    //判断某一天是否有在学习
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql = "Select * from " + Constants.TABLE_NAME + " where Years=" + year + " and Months=" + month + " and Days=" + day;
