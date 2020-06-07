@@ -252,22 +252,46 @@ public class Dao {
         }
         return credits;
     }
-    public double getCredits(int year, int month) {
+    public double getPreCredits(int year, int month) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql = "Select * from " + Constants.TABLE_NAME +" where Years=" + year + " and Months=" + month + " Order By Days desc";
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToNext();
-        while(cursor.moveToNext()){
+        while(cursor.moveToNext()){//非第一天学习，获取前一天的积分
             double Credits = cursor.getDouble(cursor.getColumnIndex("Credits"));
-            cursor.close();
+            //cursor.close();
             if(Credits != 0) {
                 Log.d(TAG, "今日得分" + Credits);
                 return Credits;
             }
         }
-        return 0;
+        //第一天学习，获取今天的积分
+        cursor.moveToFirst();
+        double Credits = cursor.getDouble(cursor.getColumnIndex("Credits"));
+        //cursor.close();
+        return Credits;
     }
 
+    public double getTdCredits(int year, int month) {//获取当日积分
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql = "Select * from " + Constants.TABLE_NAME +" where Years=" + year + " and Months=" + month + " Order By Days desc";
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToNext();
+        double Credits = cursor.getDouble(cursor.getColumnIndex("Credits"));
+        //cursor.close();
+        return Credits;
+    }
+
+    public double getYtdCredits(int year, int month) {//获取前日积分
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql = "Select * from " + Constants.TABLE_NAME +" where Years=" + year + " and Months=" + month + " Order By Days desc";
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToNext();
+        cursor.moveToNext();
+        double Credits = cursor.getDouble(cursor.getColumnIndex("Credits"));
+        //cursor.close();
+        return Credits;
+    }
      int getTime(int year, int month, int day) {   //获取某天连续学习天数
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql = "Select * from " + Constants.TABLE_NAME +" where Years=" + year + " and Months=" + month + " and Days=" + day;

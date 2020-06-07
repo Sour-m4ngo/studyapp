@@ -37,7 +37,7 @@ public class TimeActivity extends AppCompatActivity {
         //Toast.makeText(TimeActivity.this,"任务终止，扣除相应积分", Toast.LENGTH_SHORT).show();
         //onDestroy();
         Dao dao=new Dao(getApplicationContext());
-        credits = dao.getCredits(year, month);//获取截至上一次学习为止的当月积分
+        credits = dao.getPreCredits(year, month);//获取截至上一次学习为止的当月积分
         if(dao.isfisrtRecord(year,month)) //是本月第一条记录，直接修改本条记录中的积分
         {
             dao.minusCredits(year,month,day,credits-3);//修改本日积分
@@ -45,6 +45,14 @@ public class TimeActivity extends AppCompatActivity {
         else //本月有上一次学习记录，修改上一次学习记录
         {
             dao.minuspreCredits(year,month,credits-3);//修改上次学习积分
+            double tdCredits = dao.getTdCredits(year, month);//获得当日积分
+            if(tdCredits == 0){//今日尚未学习，用前日积分覆盖今日积分
+                double ytdCredits = dao.getYtdCredits(year, month);
+                dao.setCredits(year, month, day, ytdCredits);
+            }
+            else{
+                dao.setCredits(year, month, day, tdCredits - 3);
+            }
         }
         System.exit(0);
     }
@@ -112,7 +120,7 @@ public class TimeActivity extends AppCompatActivity {
                         }
                     }
                     int time = dao.getTime(year, month, day);//获取当日学习时长
-                    credits = dao.getCredits(year, month);//获取截至上一次学习为止的当月积分
+                    credits = dao.getPreCredits(year, month);//获取截至上一次学习为止的当月积分
                     int totaltimes = time / 30;//触发单日增加积分的次数
                     int ctndays = dao.getCtnDays(year, month, day);//获取连续学习天数
                     credits =dao.calCredits(credits, ctndays, totaltimes);//计算变化后的当月积分
