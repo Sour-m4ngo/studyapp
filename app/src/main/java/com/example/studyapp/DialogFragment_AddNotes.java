@@ -55,12 +55,11 @@ public class DialogFragment_AddNotes extends DialogFragment implements View.OnCl
     private int pro = 0;//
     private int ra = 0;
 
-    Calendar ca = Calendar.getInstance();
-    int  mYear = ca.get(Calendar.YEAR);
-    int  mMonth = ca.get(Calendar.MONTH);
-    int  mDay = ca.get(Calendar.DAY_OF_MONTH);
-
-    String DateOfSelect = null;
+    private Calendar ca = Calendar.getInstance();
+    private int  mYear = ca.get(Calendar.YEAR);
+    private int  mMonth = ca.get(Calendar.MONTH);
+    private int  mDay = ca.get(Calendar.DAY_OF_MONTH);
+    private String DateOfSelect = null;
     public DialogFragment_AddNotes() {
         super();
     }
@@ -178,9 +177,9 @@ public class DialogFragment_AddNotes extends DialogFragment implements View.OnCl
                 datePickerDialog.setCanceledOnTouchOutside(false);
                 datePickerDialog.show();
                 break;
-            case R.id.btn_notes_finish:
-                SetNotesData();
-                if(NotesType == "目标"){
+            case R.id.btn_notes_finish://点击√后获取所有数据
+                GetNotesData();//获取数据
+                if(NotesType.equals("目标")){
                     if((NotesContent.length() > 0)&&(TotalTime.length() > 0)&&(IsSelectDate == true)){
                         SendNote();
                         dismiss();
@@ -223,15 +222,16 @@ public class DialogFragment_AddNotes extends DialogFragment implements View.OnCl
         llNotesTarget.setVisibility(llNotesTarget.GONE);
         EtWorkHours.setText("");
     }
-    private void SetNotesData(){
+    private void GetNotesData(){
         NotesContent = EtNotes.getText().toString();
-        TotalTime =EtWorkHours.getText().toString();
+        TotalTime = EtWorkHours.getText().toString();
+        //i=Integer.valueOf(TotalTime).intValue();
         FinishDate[0] = mYear;
         FinishDate[1] = mMonth+1;
         FinishDate[2] = mDay;
 
     }
-    private void SendNote(){
+    private void SendNote(){//本函数不做notes组装，数据发送至fragment_notes时被组装
         Intent ResultIntent = new Intent();
         ResultIntent.putExtra(REQUESE,999);
         ResultIntent.putExtra(CONTENT,NotesContent);

@@ -17,7 +17,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:inputType="number"
-        android:hint="请输入本次学习时长"/>
+        android:hint="请输入本次学习时长(分钟)"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

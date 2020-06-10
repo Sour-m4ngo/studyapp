@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
@@ -75,15 +76,37 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         viewHolder.NotesType.setText(notes.getType());
         viewHolder.NotePorgressBar.setProgressColor(Color.parseColor("#40E0D0"));
         viewHolder.NotePorgressBar.setProgressBackgroundColor(Color.parseColor("#D3D3D3"));
-        viewHolder.NotePorgressBar.setMax(100);
-        viewHolder.NotePorgressBar.setProgress(0);
+        DecimalFormat decimalFormat=new DecimalFormat("0.00");
+        float totaltime = notes.getTotalTime();
+        String TimeUnit = notes.getUnitOfTime();
+        if (TimeUnit.equals("小时")){
+            totaltime = totaltime * 60;
+        }
+        float percent = notes.getHaveFinishMinutes() / totaltime;
+        float curProgressBar = percent * totaltime;
+        String curProgressBarInString = decimalFormat.format(curProgressBar);
+        float RealProgress = Float.parseFloat(curProgressBarInString);
+        viewHolder.NotePorgressBar.setMax(totaltime);
+        viewHolder.NotePorgressBar.setProgress(RealProgress);
+
         if(notes.getType().equals("目标")){
             //notes.getFinishDate()[1]=notes.getFinishDate()[1]+1;
             int month =notes.getFinishDate()[1];
-            viewHolder.NotesProgress.setText(notes.getFinishDate()[0]+"年"+month+"月"+notes.getFinishDate()[2]+"日"+"  "+notes.getHaveFinishMinutes()+"/"+notes.getTotalTime()+" "+notes.getUnitOfTime());
+            if(notes.getUnitOfTime().equals("小时")){
+                viewHolder.NotesProgress.setText(notes.getFinishDate()[0]+"年"+month+"月"+notes.getFinishDate()[2]+"日"+"  "+decimalFormat.format(notes.getHaveFinishMinutes()/60)+"/"+notes.getTotalTime()+" "+notes.getUnitOfTime());
+
+            }else {
+                viewHolder.NotesProgress.setText(notes.getFinishDate()[0]+"年"+month+"月"+notes.getFinishDate()[2]+"日"+"  "+notes.getHaveFinishMinutes()+"/"+notes.getTotalTime()+" "+notes.getUnitOfTime());
+
+            }
         }
         else{
-            viewHolder.NotesProgress.setText(notes.getWorkFrequency()+" "+notes.getTotalTime()+"  "+notes.getUnitOfTime());
+            if(notes.getUnitOfTime().equals("小时")){
+                viewHolder.NotesProgress.setText(notes.getWorkFrequency()+" "+decimalFormat.format(notes.getHaveFinishMinutes()/60)+"/"+notes.getTotalTime()+"  "+notes.getUnitOfTime());
+            }
+            else {
+                viewHolder.NotesProgress.setText(notes.getWorkFrequency()+" "+notes.getHaveFinishMinutes()+"/"+notes.getTotalTime()+"  "+notes.getUnitOfTime());
+            }
         }
         if (mOnItemClickListener != null) {
             viewHolder.BtnStartTomato.setOnClickListener(new View.OnClickListener() {

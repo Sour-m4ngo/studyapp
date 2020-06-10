@@ -20,6 +20,7 @@ public class DialoFragment_startCount extends DialogFragment implements View.OnC
     private View myView;
     private EditText EdInputTime;
     private Button BtnStart;
+    private String contentForSearch =  " ";
     public DialoFragment_startCount() {
         super();
     }
@@ -40,6 +41,19 @@ public class DialoFragment_startCount extends DialogFragment implements View.OnC
         initEvents();
         return builder.create();
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+
+        if (bundle != null) {
+            contentForSearch = bundle.getString("NOTECONTENT");
+        }else {
+            //throw
+        }
+    }
+
     private void initView (){
         BtnStart = myView.findViewById(R.id.btn_dialog_start);
         EdInputTime = myView.findViewById(R.id.edit_input_time);
@@ -59,7 +73,7 @@ public class DialoFragment_startCount extends DialogFragment implements View.OnC
                     duration = Integer.parseInt(EdInputTime.getText().toString());
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
-                    bundle.putInt("KET_TYPE",1);
+                    bundle.putString("CONTENT",contentForSearch);
                     bundle.putInt("DURATION",duration);
                     intent.putExtras(bundle);
                     intent.setClass(getContext(),TimeActivity.class);
@@ -68,5 +82,12 @@ public class DialoFragment_startCount extends DialogFragment implements View.OnC
                 }
                 break;
         }
+    }
+    public static DialoFragment_startCount newIntance(String noteContent){
+        DialoFragment_startCount StartCount = new DialoFragment_startCount();
+        Bundle bundle = new Bundle();
+        bundle.putString("NOTECONTENT",noteContent);
+        StartCount.setArguments(bundle);
+        return  StartCount;
     }
 }

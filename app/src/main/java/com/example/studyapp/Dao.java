@@ -579,13 +579,13 @@ public class Dao {
                 int Totaltime = cursor.getInt(cursor.getColumnIndex("Totaltime"));
                 String UnitOfTime = cursor.getString(cursor.getColumnIndex("UnitOfTime"));
                 int HaveFinishedtime = cursor.getInt(cursor.getColumnIndex("HaveFinishedtime"));
-                Log.d(TAG, "aaaaaaaaaaaaaaaaaaaaaaaaaaaa"+Type);
+                //Log.d(TAG, "aaaaaaaaaaaaaaaaaaaaaaaaaaaa"+Type);
                 if (Type.equals("目标")){
                     int FinishYears = cursor.getInt(cursor.getColumnIndex("FinishYears"));
                     int FinishMonths = cursor.getInt(cursor.getColumnIndex("FinishMonths"));
                     int FinishDays = cursor.getInt(cursor.getColumnIndex("FinishDays"));
                     int [] finishDate = new int[]{FinishYears,FinishMonths,FinishDays};//完成日期，年月日
-                    Log.d(TAG, "ttttttttttttttttttttttttt"+Content+finishDate[0]+finishDate[1]+finishDate[2]);
+                    //Log.d(TAG, "ttttttttttttttttttttttttt"+Content+finishDate[0]+finishDate[1]+finishDate[2]);
                     //String  Content,String type,int totalTime,String unitOfTime,int haveFinishMinutes,int[] finishDate
                     Notes note = new Notes(Content,Type,Totaltime,UnitOfTime,HaveFinishedtime,finishDate);
                     backNote.add(note);
@@ -598,5 +598,41 @@ public class Dao {
         }//ooooooooooooo
         cursor.close();
         return backNote;
+    }
+
+    void SaveProgress (String ContentForSearch ,int progress){//通过在待办列表中的待办内容查询该待办在数据库中的序号
+        //String sql1 = "update " + Constants.TABLE_NAME + " set CtnDays=" + ctnDays + " where Years=" + year + " and Months=" + month + " and Days=" + day;
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        int pg = progress;//当前进度
+        Cursor cursor = db.query(true,Constants.TO_DO_ITEM,null,null,null,null,null,null,null);
+        if(cursor.moveToFirst()){
+            do {
+                String content = cursor.getString(cursor.getColumnIndex("Content"));
+                if (content.equals(ContentForSearch)){
+
+                    Log.d(TAG, "SaveProgress: "+ content);
+                    pg = cursor.getInt(cursor.getColumnIndex("HaveFinishedtime"));
+                    Log.d(TAG, "SaveProgress: "+ pg);
+                }
+            }while (cursor.moveToNext());
+        }
+        pg = pg +progress;
+        String sql = "update " + Constants.TO_DO_ITEM + " set HaveFinishedtime= " + pg + " where Content=" +"'"+ContentForSearch+"'";
+        db.execSQL(sql);
+        db.close();
+    }
+    int GetProgress (String ContenForSearch){
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        Cursor cursor = db.query(true,Constants.TO_DO_ITEM,null,null,null,null,null,null,null);
+
+        if(cursor.moveToFirst()){
+            do {
+                String content = cursor.getString(cursor.getColumnIndex("Content"));
+                if (content.equals(ContenForSearch)){
+                    return cursor.getInt(cursor.getColumnIndex("HaveFinishedtime"));
+                }
+            }while (cursor.moveToNext());
+        }
+        return -1;
     }
 }
