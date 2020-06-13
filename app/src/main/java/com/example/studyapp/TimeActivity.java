@@ -57,6 +57,7 @@ public class TimeActivity extends AppCompatActivity {
         System.exit(0);
     }
 
+
     int time = 0;
     int timeFromNote = 0 ;
     int timeFromTomato = 0;
