@@ -155,6 +155,24 @@ public class Dao {
         }
     }
 
+    boolean judge0(int year, int month) //判断积分是否是0
+    {
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        String sql = "Select * from " + Constants.TABLE_NAME + " where Years=" + year + " and Months=" + month ;
+        //String sql="select * from "+ Constants.TABLE_NAME +" where Years=year and Months=month and Days=day" ;
+        Cursor cursor = db.rawQuery(sql, null);
+        Log.d(TAG, "数据项数" + cursor.getCount());
+        if (cursor.getCount() == 0) {
+            cursor.close();
+            db.close();
+            return false;
+        } else {
+            cursor.close();
+            db.close();
+            return true;
+        }
+    }
+
     boolean isfisrtRecord(int year, int month) //查询是否为本月唯一一个记录
     {
         SQLiteDatabase db = mHelper.getWritableDatabase();

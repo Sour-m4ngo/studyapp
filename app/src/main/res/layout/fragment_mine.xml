@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#DC143C"
+        android:background="#fff"
         android:orientation="vertical">
 
         <TextView
@@ -19,11 +19,16 @@
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
             android:text="我的成就"
-            android:textColor="#ffffff"
+            android:textColor="#000"
             android:textSize="20sp"
             android:textStyle="bold" />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#000000" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,54 +36,107 @@
         android:background="#fff"
         android:orientation="vertical">
 
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fff"
             android:orientation="horizontal">
 
-
-            <EditText
+            <TextView
                 android:id="@+id/biaoti1"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginBottom="10dp"
-                android:gravity="center"
+                android:layout_marginLeft="145dp"
                 android:hint="积分："
                 android:inputType="number"
                 android:textColor="#000"
+                android:textColorHint="#000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/queding"
-                android:layout_width="90dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_toRightOf="@+id/biaoti1"
-                android:text="查询"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:textStyle="bold" />
         </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/jifen1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:inputType="number"
+                    android:text="00"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </LinearLayout>
+
+
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="#000000" />
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
         <TextView
             android:id="@+id/biaoti2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
+            android:layout_marginLeft="59dp"
             android:text="距离下一段位："
             android:textColor="#000"
             android:textSize="20sp"
             android:textStyle="bold" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/jifen2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:text="00"
+            android:inputType="number"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        </RelativeLayout>
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -93,13 +151,13 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/qingtong1"
+            android:id="@+id/qt1"
             android:layout_width="80dip"
             android:layout_height="80dip"
             android:src="@drawable/qingtong2" />
 
         <TextView
-            android:id="@+id/qingtong2"
+            android:id="@+id/qt2"
             android:layout_width="250dp"
             android:layout_height="80dip"
             android:gravity="center"
@@ -120,13 +178,13 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/baiyin1"
+            android:id="@+id/by1"
             android:layout_width="80dip"
             android:layout_height="80dip"
             android:src="@drawable/baiyin2" />
 
         <TextView
-            android:id="@+id/baiyin2"
+            android:id="@+id/by2"
             android:layout_width="250dp"
             android:layout_height="80dip"
             android:gravity="center"
@@ -147,13 +205,13 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/huangjin1"
+            android:id="@+id/hj1"
             android:layout_width="80dip"
             android:layout_height="80dip"
             android:src="@drawable/huangjin2" />
 
         <TextView
-            android:id="@+id/huangjin2"
+            android:id="@+id/hj2"
             android:layout_width="250dp"
             android:layout_height="80dip"
             android:gravity="center"
@@ -174,13 +232,13 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/bojin1"
+            android:id="@+id/bj1"
             android:layout_width="80dip"
             android:layout_height="80dip"
             android:src="@drawable/bojin2" />
 
         <TextView
-            android:id="@+id/bojin2"
+            android:id="@+id/bj2"
             android:layout_width="250dp"
             android:layout_height="80dip"
             android:gravity="center"
@@ -201,13 +259,13 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/zuanshi1"
+            android:id="@+id/zs1"
             android:layout_width="80dip"
             android:layout_height="80dip"
             android:src="@drawable/zuanshi2" />
 
         <TextView
-            android:id="@+id/zuanshi2"
+            android:id="@+id/zs2"
             android:layout_width="250dp"
             android:layout_height="80dip"
             android:gravity="center"
@@ -228,13 +286,13 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/wangzhe1"
+            android:id="@+id/wz1"
             android:layout_width="80dip"
             android:layout_height="80dip"
             android:src="@drawable/wangzhe2" />
 
         <TextView
-            android:id="@+id/wangzhe2"
+            android:id="@+id/wz2"
             android:layout_width="250dp"
             android:layout_height="80dip"
             android:gravity="center"
