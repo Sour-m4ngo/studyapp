@@ -19,6 +19,7 @@ public class Fragment_mine extends Fragment {
     Calendar cal= Calendar.getInstance();//获取系统时间
     int year=cal.get(Calendar.YEAR);
     int month=cal.get(Calendar.MONTH)+1;
+    Double jifen=0.0;
 
     @BindView(R.id.qt1)
     ImageView qt1;
@@ -56,11 +57,14 @@ public class Fragment_mine extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
         ButterKnife.bind(this, view);
         Dao dao = new Dao(getContext());
-        if (dao.judge0(year,month)==false) {
-            jifen1.setText(String.valueOf(0));
-            jifen2.setText(String.valueOf(50));
+        if (dao.judge0(year,month)==false) //无记录，积分为0
+        {
+            jifen=0.0;
         }
-        Double jifen = dao.getTdCredits(year, month);
+        else //有记录，获取积分
+            {
+            jifen = dao.getTdCredits(year, month);
+        }
         if (jifen < 50) {
             qt2.setTextColor(getResources().getColor(R.color.c1));
             qt1.setImageResource(R.drawable.qingtong1);
