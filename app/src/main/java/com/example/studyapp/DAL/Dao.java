@@ -1,4 +1,4 @@
-package com.example.studyapp;
+package com.example.studyapp.DAL;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+
+import com.example.studyapp.BBL.Notes;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,7 +26,7 @@ public class Dao {
     }
 
     //插入信息
-    void insert(int year, int month, int day, int time) {
+    public void insert(int year, int month, int day, int time) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
           /*String sql="insert into "+ Constants.TABLE_NAME +"(date,time,times,phone) values(?,?,?,?)";
           db.execSQL(sql,new Object[]{"2020.3.9",50,1});*/
@@ -40,7 +42,7 @@ public class Dao {
         db.close();
     }
 
-    void insert(int year, int month, int day) {
+    public void insert(int year, int month, int day) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
           /*String sql="insert into "+ Constants.TABLE_NAME +"(date,time,times,phone) values(?,?,?,?)";
           db.execSQL(sql,new Object[]{"2020.3.9",50,1});*/
@@ -60,7 +62,7 @@ public class Dao {
     }
 
     //删除信息
-     void delete() {
+     public void delete() {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql = "delete from " + Constants.TABLE_NAME + " where " + "Days=" + "33";
         db.execSQL(sql);
@@ -70,7 +72,7 @@ public class Dao {
     }
 
     //更新
-     void update(int year, int month, int day, int t) {
+     public void update(int year, int month, int day, int t) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         //修改当天专注时间 time=time+t
         String sql1 = "update " + Constants.TABLE_NAME + " set time=" + "time+" + t + " where Years=" + year + " and Months=" + month + " and Days=" + day;
@@ -87,7 +89,7 @@ public class Dao {
     }
 
 
-     void recCtnDays(int year, int month, int day)
+     public void recCtnDays(int year, int month, int day)
      {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql1 = "update " + Constants.TABLE_NAME + " set CtnDays=" + 1 + " where Years=" + year + " and Months=" + month + " and Days=" + day;
@@ -96,7 +98,7 @@ public class Dao {
         db.close();
     }
 
-    void setCredits(int year, int month, int day, double credits) {  //修改数据库学习天数为1
+    public void setCredits(int year, int month, int day, double credits) {  //修改数据库学习天数为1
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql1 = "update " + Constants.TABLE_NAME + " set credits =" + credits + " where Years=" + year + " and Months=" + month + " and Days=" + day;
         db.execSQL(sql1);
@@ -104,14 +106,14 @@ public class Dao {
         db.close();
     }
 
-    void setIscal(int year, int month, int day) {  //修改数据库是否已计算连续天数得分为1
+    public void setIscal(int year, int month, int day) {  //修改数据库是否已计算连续天数得分为1
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql1 = "update " + Constants.TABLE_NAME + " set iscal =" + 1 + " where Years=" + year + " and Months=" + month + " and Days=" + day;
         db.execSQL(sql1);
         db.close();
     }
 
-    void minusCredits(int year, int month,int day,double credits){
+    public void minusCredits(int year, int month,int day,double credits){
         SQLiteDatabase db = mHelper.getWritableDatabase();
         //修改积分
         String sql1 = "update " + Constants.TABLE_NAME + " set credits =" + credits + " where Years=" + year + " and Months=" + month + " and Days=" + day;
@@ -120,7 +122,7 @@ public class Dao {
         db.close();
     }
 
-    void minuspreCredits(int year, int month,double credits){
+    public void minuspreCredits(int year, int month,double credits){
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql = "Select * from " + Constants.TABLE_NAME +" where Years=" + year + " and Months=" + month + " Order By Days desc";
         Cursor cursor = db.rawQuery(sql, null);
@@ -135,7 +137,7 @@ public class Dao {
         db.close();
     }
 
-    void addCtnDays(int year, int month, int day, int ctnDays) {     //修改数据库学习天数+1
+    public void addCtnDays(int year, int month, int day, int ctnDays) {     //修改数据库学习天数+1
         SQLiteDatabase db = mHelper.getWritableDatabase();
         ctnDays = ctnDays + 1;
         String sql1 = "update " + Constants.TABLE_NAME + " set CtnDays=" + ctnDays + " where Years=" + year + " and Months=" + month + " and Days=" + day;
@@ -146,7 +148,7 @@ public class Dao {
 
 
     //查询
-     boolean query(int year, int month, int day) {
+    public boolean query(int year, int month, int day) {
         Log.d(TAG, "年月日" + year + " " + month + " " + day);
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql = "Select * from " + Constants.TABLE_NAME + " where Years=" + year + " and Months=" + month + " and Days=" + day;
@@ -164,7 +166,7 @@ public class Dao {
         }
     }
 
-    boolean judge0(int year, int month) //判断积分是否是0
+    public boolean judge0(int year, int month) //判断积分是否是0
     {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql = "Select * from " + Constants.TABLE_NAME + " where Years=" + year + " and Months=" + month ;
@@ -182,7 +184,7 @@ public class Dao {
         }
     }
 
-    boolean isfisrtRecord(int year, int month) //查询是否为本月唯一一个记录
+    public boolean isfisrtRecord(int year, int month) //查询是否为本月唯一一个记录
     {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql = "Select * from " + Constants.TABLE_NAME + " where Years=" + year + " and Months=" + month ;
@@ -200,7 +202,7 @@ public class Dao {
         }
     }
 
-     boolean isCtnDays(int year, int month, int day) {    //判断某一天是否有在学习
+    public boolean isCtnDays(int year, int month, int day) {    //判断某一天是否有在学习
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql = "Select * from " + Constants.TABLE_NAME + " where Years=" + year + " and Months=" + month + " and Days=" + day;
         Cursor cursor = db.rawQuery(sql, null);
@@ -219,7 +221,7 @@ public class Dao {
             return false;
         }
     }
-     boolean isAddCtn(int year, int month, int day) {     //判断某一天是否满足计入学习天数+1条件（当日学习时间不少于30分钟）
+    public boolean isAddCtn(int year, int month, int day) {     //判断某一天是否满足计入学习天数+1条件（当日学习时间不少于30分钟）
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql = "Select * from " + Constants.TABLE_NAME + " where Years=" + year + " and Months=" + month + " and Days=" + day;
         Cursor cursor = db.rawQuery(sql, null);
@@ -239,7 +241,7 @@ public class Dao {
         }
     }
 
-     int getCtnDays(int year, int month, int day) {   //获取某天连续学习天数
+    public int getCtnDays(int year, int month, int day) {   //获取某天连续学习天数
         SQLiteDatabase db = mHelper.getWritableDatabase();
         String sql = "Select * from " + Constants.TABLE_NAME +" where Years=" + year + " and Months=" + month + " and Days=" + day;
         Cursor cursor = db.rawQuery(sql, null);
@@ -254,7 +256,7 @@ public class Dao {
         }
     }
 
-     double calCredits(double lcredits, int ctndays, int totaltimes){
+    public double calCredits(double lcredits, int ctndays, int totaltimes){
         double credits;
          if(ctndays > 10) //连续学习天数超过上限
          {
@@ -356,7 +358,7 @@ public class Dao {
 //    }
 
     //获取本周数据进行显示
-     void getdataW(ArrayAdapter<String> adapter) {
+     public void getdataW(ArrayAdapter<String> adapter) {
         Calendar cal = Calendar.getInstance();
         int wekday = cal.get(Calendar.DAY_OF_WEEK);//周日为1,周一为2
         cal.add(Calendar.DAY_OF_MONTH, -(wekday - 1));//获取本周一时间
@@ -417,7 +419,7 @@ public class Dao {
     }
 
     //获得本周数据制作折线图
-     void getLviewW(List<String> xlist, List<Float> ylist) {
+     public void getLviewW(List<String> xlist, List<Float> ylist) {
         Calendar cal = Calendar.getInstance();
         int wekday = cal.get(Calendar.DAY_OF_WEEK);//周日为1,周一为2
         cal.add(Calendar.DAY_OF_MONTH, -(wekday - 1));//获取本周一时间
@@ -469,7 +471,7 @@ public class Dao {
     }
 
     //获取当月数据进行显示
-     void getdataM(ArrayAdapter<String> adapter, int m) {
+     public void getdataM(ArrayAdapter<String> adapter, int m) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         adapter.clear();//清空adapter的内容，避免更新重复的内容
         //查询student表中所有数据
@@ -493,7 +495,7 @@ public class Dao {
     }
 
     //获取当月数据制作折线图
-     void  getLviewM(List<String> xlist, List<Float> ylist){
+     public void  getLviewM(List<String> xlist, List<Float> ylist){
         SQLiteDatabase db = mHelper.getWritableDatabase();
         Calendar cal = Calendar.getInstance();
         int sumday=cal.getActualMaximum(Calendar.DAY_OF_MONTH);//获取当月天数
@@ -539,7 +541,7 @@ public class Dao {
         }
     }
     //获取本年数据，以月为单位进行展示
-     void getdataY(ArrayAdapter<String> adapter, int y) {
+     public void getdataY(ArrayAdapter<String> adapter, int y) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         adapter.clear();//清空adapter的内容，避免更新重复的内容
         //查询student表中所有数据
@@ -573,7 +575,7 @@ public class Dao {
     }
 
     //获取本年数据制作折线图
-     void getLviewY(List<String> xlist, List<Float> ylist, int y) {
+     public void getLviewY(List<String> xlist, List<Float> ylist, int y) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         float sumtime = 0;
         String date = null;
@@ -599,7 +601,7 @@ public class Dao {
         }
     }
 
-     void SaveNoteData (Notes note){
+     public void SaveNoteData (Notes note){
         SQLiteDatabase db = mHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("Type",note.getType());//待办类型
@@ -620,7 +622,7 @@ public class Dao {
         db.insert(Constants.TO_DO_ITEM, null, values);
 
     }
-     ArrayList<Notes> getNoteData(){
+     public ArrayList<Notes> getNoteData(){
         SQLiteDatabase db = mHelper.getWritableDatabase();
         ArrayList<Notes> backNote = new ArrayList<Notes> ();
         Cursor cursor = db.query(true,Constants.TO_DO_ITEM,null,null,null,null,null,null,null);
@@ -652,7 +654,7 @@ public class Dao {
         return backNote;
     }
 
-    void SaveProgress (String ContentForSearch ,int progress){//通过在待办列表中的待办内容查询该待办在数据库中的序号
+    public void SaveProgress (String ContentForSearch ,int progress){//通过在待办列表中的待办内容查询该待办在数据库中的序号
         //String sql1 = "update " + Constants.TABLE_NAME + " set CtnDays=" + ctnDays + " where Years=" + year + " and Months=" + month + " and Days=" + day;
         SQLiteDatabase db = mHelper.getWritableDatabase();
         int pg = progress;//当前进度
@@ -673,7 +675,7 @@ public class Dao {
         db.execSQL(sql);
         db.close();
     }
-    int GetProgress (String ContenForSearch){
+    public int GetProgress (String ContenForSearch){
         SQLiteDatabase db = mHelper.getWritableDatabase();
         Cursor cursor = db.query(true,Constants.TO_DO_ITEM,null,null,null,null,null,null,null);
 
@@ -682,9 +684,30 @@ public class Dao {
                 String content = cursor.getString(cursor.getColumnIndex("Content"));
                 if (content.equals(ContenForSearch)){
                     return cursor.getInt(cursor.getColumnIndex("HaveFinishedtime"));
+
                 }
             }while (cursor.moveToNext());
         }
+        cursor.close();
         return -1;
+    }
+    public boolean IsHaveSameContent (String ContenForSearch){
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        Cursor cursor = db.query(true,Constants.TO_DO_ITEM,null,null,null,null,null,null,null);
+        if(cursor.moveToFirst()){
+            do {
+                String content = cursor.getString(cursor.getColumnIndex("Content"));
+                if (content.equals(ContenForSearch)){
+                    return true;
+                }
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return false;
+    }
+
+    public void DeleteNote (String ContentForSearch){
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+        db.delete(Constants.TO_DO_ITEM,"content = ?",new String[]{ContentForSearch});
     }
 }

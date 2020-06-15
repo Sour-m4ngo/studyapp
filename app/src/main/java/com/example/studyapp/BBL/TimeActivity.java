@@ -1,7 +1,6 @@
-package com.example.studyapp;
+package com.example.studyapp.BBL;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -11,6 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.studyapp.DAL.Dao;
+import com.example.studyapp.R;
 
 import java.util.Calendar;
 
@@ -61,6 +63,7 @@ public class TimeActivity extends AppCompatActivity {
     int time = 0;
     int timeFromNote = 0 ;
     int timeFromTomato = 0;
+    String contentForSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,7 @@ public class TimeActivity extends AppCompatActivity {
         //int type = bundle.getInt("KET_TYPE");
         timeFromNote = bundle.getInt("DURATION");
         timeFromTomato = bundle.getInt("num");
+        contentForSearch = bundle.getString("CONTENT");
         //Toast.makeText(TimeActivity.this,"asda"+timeFromNote,Toast.LENGTH_SHORT).show();
         if(timeFromTomato == 0){
             time = timeFromNote;
@@ -136,6 +140,7 @@ public class TimeActivity extends AppCompatActivity {
                     Log.d("Credit","积分为"+credits);
                     Log.d("state","状态"+state);
                     dao.setCredits(year, month, day, credits);//记录当月积分
+                    dao.SaveProgress(contentForSearch,timeFromNote);
                     Message msg = new Message();
                     msg.what= 1;
                     handlerp.sendMessage(msg);

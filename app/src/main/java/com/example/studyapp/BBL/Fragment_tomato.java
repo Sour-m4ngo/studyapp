@@ -1,4 +1,4 @@
-package com.example.studyapp;
+package com.example.studyapp.BBL;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.studyapp.R;
 
 
 public class Fragment_tomato extends Fragment {

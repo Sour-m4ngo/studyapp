@@ -1,18 +1,17 @@
-package com.example.studyapp;
+package com.example.studyapp.UI;
 
 import android.graphics.Color;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.example.studyapp.BBL.Notes;
+import com.example.studyapp.R;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -27,11 +26,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
     /** item里面有多个控件可以点击 */
     public enum ViewName {
-        START
+        START,
+        DELETE
     }
 
     public interface OnRecyclerViewItemClickListener {
-        void onClick(View view, int position);
+        void onClick(View view, int position,ViewName viewName);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -39,6 +39,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         TextView NotesType;
         TextView NotesProgress;//进度说明
         Button BtnStartTomato;
+        Button BtnDeleteTomato;
         RoundCornerProgressBar NotePorgressBar;//进度条
 
         int i =0;
@@ -49,7 +50,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             NotesType = itemView.findViewById(R.id.tv_notes_type);//这里写点击事件
             NotePorgressBar = itemView.findViewById(R.id.progress);
             NotesProgress = itemView.findViewById(R.id.NoteProgress);
+            BtnDeleteTomato = itemView.findViewById(R.id.btn_notes_delete);
             BtnStartTomato.setOnClickListener(this);
+            BtnDeleteTomato.setOnClickListener(this);
+
         }
 
         @Override
@@ -112,7 +116,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             viewHolder.BtnStartTomato.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mOnItemClickListener.onClick(view, position);
+                    mOnItemClickListener.onClick(view, position,ViewName.START);
+                }
+            });
+            viewHolder.BtnDeleteTomato.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnItemClickListener.onClick(view, position,ViewName.DELETE);
                 }
             });
 

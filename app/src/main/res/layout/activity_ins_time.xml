@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/background"
-    tools:context=".Fragment_tomato">
+    tools:context=".BBL.Fragment_tomato">
 
     <EditText
         android:id="@+id/ET1"

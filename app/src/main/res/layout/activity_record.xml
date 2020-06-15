@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragment_record"
+    tools:context=".BBL.Fragment_record"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
         android:layout_height="0dp"
         android:layout_weight="5" />
 
-    <com.example.studyapp.LineView
+    <com.example.studyapp.UI.LineView
         android:id="@+id/lineView"
         android:layout_width="match_parent"
         android:layout_height="0dp"

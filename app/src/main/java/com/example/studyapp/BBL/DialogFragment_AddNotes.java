@@ -1,4 +1,4 @@
-package com.example.studyapp;
+package com.example.studyapp.BBL;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -21,6 +21,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
+import com.example.studyapp.DAL.Dao;
+import com.example.studyapp.R;
+import com.example.studyapp.UI.MainActivity;
+
 import java.util.Calendar;
 
 public class DialogFragment_AddNotes extends DialogFragment implements View.OnClickListener {
@@ -29,6 +33,7 @@ public class DialogFragment_AddNotes extends DialogFragment implements View.OnCl
     private Button BtnTargetTime;
     private Button BtnFinish;
     private Button BtnExit;
+    private Button BtnDelete;
     private Spinner SpiWorkFrequency;
     private Spinner SpiUnitOfTime;
     private RoundCornerProgressBar progress1;
@@ -103,6 +108,7 @@ public class DialogFragment_AddNotes extends DialogFragment implements View.OnCl
         EtWorkHours = ll_view.findViewById(R.id.et_notes_workHours);
         EtNotes = ll_view.findViewById(R.id.et_notes);
         BtnExit = ll_view.findViewById(R.id.btn_notes_exit);
+        BtnDelete = ll_view.findViewById(R.id.btn_notes_delete);
 
     }
     private void initEvents(){
@@ -179,8 +185,10 @@ public class DialogFragment_AddNotes extends DialogFragment implements View.OnCl
                 break;
             case R.id.btn_notes_finish://点击√后获取所有数据
                 GetNotesData();//获取数据
+                Dao dao = new Dao(getContext());
+
                 if(NotesType.equals("目标")){
-                    if((NotesContent.length() > 0)&&(TotalTime.length() > 0)&&(IsSelectDate == true)){
+                    if((NotesContent.length() > 0)&&(TotalTime.length() > 0)&&(IsSelectDate == true) && !(dao.IsHaveSameContent(NotesContent)) ){
                         SendNote();
                         dismiss();
                     }else {
@@ -190,14 +198,15 @@ public class DialogFragment_AddNotes extends DialogFragment implements View.OnCl
                         else{
                             if(IsSelectDate == false)
                                 Toast.makeText(getActivity(),"请选择日期",Toast.LENGTH_LONG).show();
-                            else
-                            if(TotalTime.length() <= 0)
+                            else if(TotalTime.length() <= 0)
                                 Toast.makeText(getActivity(),"请输入时长",Toast.LENGTH_LONG).show();
+                            else if (dao.IsHaveSameContent(NotesContent))
+                                Toast.makeText(getActivity(),"该内容已存在，请重新输入",Toast.LENGTH_LONG).show();
                         }
                     }
                 }
                 else {
-                    if((NotesContent.length() > 0)&&(TotalTime.length() > 0)){
+                    if( (NotesContent.length() > 0) && (TotalTime.length() > 0) &&  !(dao.IsHaveSameContent(NotesContent)) ){
                         SendNote();
                         dismiss();
                     }
@@ -206,13 +215,15 @@ public class DialogFragment_AddNotes extends DialogFragment implements View.OnCl
                             Toast.makeText(getActivity(),"内容为空，请输入",Toast.LENGTH_LONG).show();
                         else if (TotalTime.length() <= 0)
                             Toast.makeText(getActivity(),"请输入时长",Toast.LENGTH_LONG).show();
-
+                        else if (dao.IsHaveSameContent(NotesContent))
+                            Toast.makeText(getActivity(),"该内容已存在，请重新输入",Toast.LENGTH_LONG).show();
                     }
                 }
                 break;
             case R.id.btn_notes_exit:
                 dismiss();
                 break;
+
         }
     }
     public void ResetView(){

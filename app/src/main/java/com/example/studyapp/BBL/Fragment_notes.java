@@ -1,19 +1,20 @@
-package com.example.studyapp;
+package com.example.studyapp.BBL;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+
+import com.example.studyapp.DAL.Dao;
+import com.example.studyapp.UI.NotesAdapter;
+import com.example.studyapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -94,14 +95,24 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
         recyclerView.setLayoutManager(layoutManager);
         adapter.setOnItemClickListener(new NotesAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void onClick(View view, int position) {//弹出学习时间窗口，输入后跳转至计时器
+            public void onClick(View view, int position, NotesAdapter.ViewName viewName) {//弹出学习时间窗口，输入后跳转至计时器
                 //Toast.makeText(getActivity(),"ttttt",Toast.LENGTH_SHORT).show();
                 Notes temp = mNotes.get(position);
-                UpdatePos = position;
                 String noteContent = temp.getNotesContent();
-                dialoFragmentStartCount = DialoFragment_startCount.newIntance(noteContent);//传入被点击的note在list（mNotes）中的序号
-                dialoFragmentStartCount.setTargetFragment(Fragment_notes.this,0);
-                dialoFragmentStartCount.show(getFragmentManager(),"StartDialogFragment");
+                if (viewName.equals(NotesAdapter.ViewName.START)){
+                    UpdatePos = position;
+                    dialoFragmentStartCount = DialoFragment_startCount.newIntance(noteContent);//传入被点击的note在list（mNotes）中的序号
+                    dialoFragmentStartCount.setTargetFragment(Fragment_notes.this,0);
+                    dialoFragmentStartCount.show(getFragmentManager(),"StartDialogFragment");
+                }else if (viewName.equals(NotesAdapter.ViewName.DELETE)){
+                    //Toast.makeText(getActivity(),"ttttt",Toast.LENGTH_SHORT).show();
+                    dao.DeleteNote(noteContent);
+                    adapter.notifyItemChanged(position);
+                    mNotes.remove(position);
+
+
+                    //
+                }
             }
         });
     }

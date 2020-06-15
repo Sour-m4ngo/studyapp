@@ -1,4 +1,4 @@
-package com.example.studyapp;
+package com.example.studyapp.BBL;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,12 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.example.studyapp.R;
 
 public class DialoFragment_startCount extends DialogFragment implements View.OnClickListener {
     private View myView;

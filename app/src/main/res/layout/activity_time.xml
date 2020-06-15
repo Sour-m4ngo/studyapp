@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/background1"
-    tools:context=".TimeActivity">
+    tools:context=".BBL.TimeActivity">
 
 <TextView
     android:id="@+id/tv_timer1"

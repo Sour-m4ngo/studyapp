@@ -1,7 +1,6 @@
-package com.example.studyapp;
+package com.example.studyapp.BBL;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Notes implements Serializable {
     private String NotesContent;
@@ -17,7 +16,7 @@ public class Notes implements Serializable {
     private int[] CreateDate = new int[]{};//创建日期，年月日
 
     Notes(){};
-    Notes(String  Content,String type,int totalTime,String unitOfTime,int[] finishDate,int [] createDate){
+    public Notes(String  Content,String type,int totalTime,String unitOfTime,int[] finishDate,int [] createDate){
         NotesContent = Content;
         NotesType = type;
         TotalTime = totalTime;
@@ -26,7 +25,7 @@ public class Notes implements Serializable {
         CreateDate = createDate.clone();
     };
 
-    Notes(String  Content,String type,int totalTime,String unitOfTime,int haveFinishMinutes,int[] finishDate){
+    public Notes(String  Content,String type,int totalTime,String unitOfTime,int haveFinishMinutes,int[] finishDate){
         NotesContent = Content;
         NotesType = type;
         TotalTime = totalTime;
@@ -34,7 +33,7 @@ public class Notes implements Serializable {
         HaveFinishMinutes = haveFinishMinutes;
         FinishDate = finishDate;
     };
-    Notes(String  Content,String type,int totalTime,String unitOfTime,int haveFinishMinutes,String frequency){
+    public Notes(String  Content,String type,int totalTime,String unitOfTime,int haveFinishMinutes,String frequency){
         NotesContent = Content;
         NotesType = type;
         TotalTime = totalTime;
@@ -42,7 +41,7 @@ public class Notes implements Serializable {
         HaveFinishMinutes = haveFinishMinutes;
         WorkFrequency = frequency;
     };
-    Notes (String Content,String type){
+    public Notes (String Content,String type){
         NotesContent = Content;
         NotesType = type;
     };

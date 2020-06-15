@@ -1,4 +1,4 @@
-package com.example.studyapp;
+package com.example.studyapp.DAL;
 
 public class Constants {
     public static final String DATABASE_NAME="study.db";
