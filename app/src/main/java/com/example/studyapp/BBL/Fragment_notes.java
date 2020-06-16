@@ -20,9 +20,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class Fragment_notes extends Fragment implements View.OnClickListener{
+    static final int REUEST_CODDE = 0;
     private FloatingActionButton btn_add;
     private ArrayList<Notes> mNotes = new ArrayList<>();
-    private static final int REUEST_CODDE = 0;
     private View view;
     private DialogFragment_AddNotes dialogFragment_addNotes;
     private DialoFragment_startCount dialoFragmentStartCount ;

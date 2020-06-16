@@ -91,8 +91,8 @@ public class TimeActivity extends AppCompatActivity {
             Log.d("初始化","已经初始化今日学习记录");
         }
 
-        time = time *1000;
-        final long finalTime = time/1000;
+        time = time *1000*60;
+        final long finalTime = time/(1000*60);
         if(time != 0){
             new CountDownTimer(time,1000) {
                 @Override
@@ -102,6 +102,7 @@ public class TimeActivity extends AppCompatActivity {
                     long second=(t-hour*(1000*60*60)-minute*(1000*60))/1000;
                     tv_Timer.setText("剩余" + hour+"小时" + minute + "分钟" +second + "秒");
                 }
+
                 @Override
                 public void onFinish() {
                     Toast.makeText(TimeActivity.this,"您已成功完成专注计划", Toast.LENGTH_SHORT).show();
