@@ -21,15 +21,15 @@ import java.util.ArrayList;
 
 public class Fragment_notes extends Fragment implements View.OnClickListener{
     private FloatingActionButton btn_add;
-    private ArrayList<Notes> mNotes = new ArrayList<Notes>();
-    protected static final int REUEST_CODDE = 0;
+    private ArrayList<Notes> mNotes = new ArrayList<>();
+    private static final int REUEST_CODDE = 0;
     private View view;
     private DialogFragment_AddNotes dialogFragment_addNotes;
     private DialoFragment_startCount dialoFragmentStartCount ;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager ;
     private NotesAdapter adapter;
-    int UpdatePos ;
+    private int UpdatePos ;
     public Fragment_notes() {
         // Required empty public constructor
     }
@@ -106,11 +106,10 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
                     dialoFragmentStartCount.show(getFragmentManager(),"StartDialogFragment");
                 }else if (viewName.equals(NotesAdapter.ViewName.DELETE)){
                     //Toast.makeText(getActivity(),"ttttt",Toast.LENGTH_SHORT).show();
-                    dao.DeleteNote(noteContent);
-                    adapter.notifyItemChanged(position);
+                    adapter.notifyItemRemoved(position);
+                    adapter.notifyItemRangeChanged(position, mNotes.size() - position);
                     mNotes.remove(position);
-
-
+                    dao.DeleteNote(noteContent);
                     //
                 }
             }
