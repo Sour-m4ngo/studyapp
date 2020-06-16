@@ -1,13 +1,17 @@
-package com.example.studyapp;
+package com.example.studyapp.BBL;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+
+import com.example.studyapp.DAL.Dao;
+import com.example.studyapp.UI.NotesAdapter;
+import com.example.studyapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +24,12 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
     private ArrayList<Notes> mNotes = new ArrayList<Notes>();
     protected static final int REUEST_CODDE = 0;
     private View view;
-    private View view_AlertDialog;
-    private AlertDialog AlertDialog = null;
-    private AlertDialog.Builder Builder_AlterDialog;
     private DialogFragment_AddNotes dialogFragment_addNotes;
     private DialoFragment_startCount dialoFragmentStartCount ;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager ;
     private NotesAdapter adapter;
+    int UpdatePos ;
     public Fragment_notes() {
         // Required empty public constructor
     }
@@ -38,6 +40,18 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if( !(mNotes.isEmpty()) ){
+            Notes temp = mNotes.get(UpdatePos);
+            Dao dao = new Dao(getContext());
+            temp.setHaveFinishMinutes(dao.GetProgress(temp.getNotesContent()));//
+            mNotes.set(UpdatePos,temp);
+            adapter.notifyItemChanged(UpdatePos);
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {//这个函数在创建视图时调用，点击事件等方法不放在这里，这里用于加载控件（应该）
         // Inflate the layout for this fragment
@@ -45,7 +59,7 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
         btn_add = view.findViewById(R.id.add_FloatActBtn);
         btn_add.setOnClickListener(this);
         dialogFragment_addNotes = new DialogFragment_AddNotes();
-        dialoFragmentStartCount = new DialoFragment_startCount();
+
        initView();
        initAdapter();
        //initData();
@@ -81,16 +95,28 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
         recyclerView.setLayoutManager(layoutManager);
         adapter.setOnItemClickListener(new NotesAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void onClick(View view, int position) {
-                Toast.makeText(getActivity(),"ttttt",Toast.LENGTH_SHORT).show();//设置
-                dialoFragmentStartCount.setTargetFragment(Fragment_notes.this,0);
-                dialoFragmentStartCount.show(getFragmentManager(),"StartDialogFragment");
+            public void onClick(View view, int position, NotesAdapter.ViewName viewName) {//弹出学习时间窗口，输入后跳转至计时器
+                //Toast.makeText(getActivity(),"ttttt",Toast.LENGTH_SHORT).show();
+                Notes temp = mNotes.get(position);
+                String noteContent = temp.getNotesContent();
+                if (viewName.equals(NotesAdapter.ViewName.START)){
+                    UpdatePos = position;
+                    dialoFragmentStartCount = DialoFragment_startCount.newIntance(noteContent);//传入被点击的note在list（mNotes）中的序号
+                    dialoFragmentStartCount.setTargetFragment(Fragment_notes.this,0);
+                    dialoFragmentStartCount.show(getFragmentManager(),"StartDialogFragment");
+                }else if (viewName.equals(NotesAdapter.ViewName.DELETE)){
+                    //Toast.makeText(getActivity(),"ttttt",Toast.LENGTH_SHORT).show();
+                    dao.DeleteNote(noteContent);
+                    adapter.notifyItemChanged(position);
+                    mNotes.remove(position);
+
+
+                    //
+                }
             }
         });
     }
-    private void initData(){
 
-    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -101,11 +127,11 @@ public class Fragment_notes extends Fragment implements View.OnClickListener{
             String totalTime = data.getStringExtra(DialogFragment_AddNotes.TOTALTIME);
             String unitOfTime = data.getStringExtra(DialogFragment_AddNotes.UNITOFTIME);
             String workFrequency = data.getStringExtra(DialogFragment_AddNotes.WORKFREQUENCY);
-            Toast.makeText(getActivity(), content+" "+type+" "+finishDate[2]+" "+totalTime+" "+unitOfTime+" ", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), content+" "+type+" "+finishDate[2]+" "+totalTime+" "+unitOfTime+" ", Toast.LENGTH_LONG).show();
+            float i = Float.parseFloat(totalTime);
             Notes tNotes= new Notes();
             tNotes.setNotesContent(content);
             tNotes.setType(type);
-            int i = Integer.parseInt(totalTime);
             tNotes.setTotalTime(i);
             tNotes.setWorkFrequency(workFrequency);
             tNotes.setUnitOfTime(unitOfTime);

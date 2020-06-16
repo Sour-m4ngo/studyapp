@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".TimeActivity">
+    android:background="@drawable/background1"
+    tools:context=".BBL.TimeActivity">
 
 <TextView
     android:id="@+id/tv_timer1"

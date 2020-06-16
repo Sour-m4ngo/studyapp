@@ -1,23 +1,22 @@
-package com.example.studyapp;
+package com.example.studyapp.BBL;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Notes implements Serializable {
     private String NotesContent;
 
     private String NotesType;//待办时间类型0为目标制定，1为习惯养成
     private String UnitOfTime;//时间单位
-    private int HaveFinishMinutes;//已经完成时长
-    private int ResMinutes;//剩余时长
-    private int TotalTime;//总时长
+    private float HaveFinishMinutes;//已经完成时长,存储时使用分钟做单位
+    private float ResMinutes;//剩余时长
+    private float TotalTime;//总时长
     private int FinishedTimes;//完成次数
     private String WorkFrequency;
     private int[] FinishDate = new int[]{};//完成日期，年月日
     private int[] CreateDate = new int[]{};//创建日期，年月日
 
     Notes(){};
-    Notes(String  Content,String type,int totalTime,String unitOfTime,int[] finishDate,int [] createDate){
+    public Notes(String  Content,String type,int totalTime,String unitOfTime,int[] finishDate,int [] createDate){
         NotesContent = Content;
         NotesType = type;
         TotalTime = totalTime;
@@ -26,7 +25,7 @@ public class Notes implements Serializable {
         CreateDate = createDate.clone();
     };
 
-    Notes(String  Content,String type,int totalTime,String unitOfTime,int haveFinishMinutes,int[] finishDate){
+    public Notes(String  Content,String type,int totalTime,String unitOfTime,int haveFinishMinutes,int[] finishDate){
         NotesContent = Content;
         NotesType = type;
         TotalTime = totalTime;
@@ -34,7 +33,7 @@ public class Notes implements Serializable {
         HaveFinishMinutes = haveFinishMinutes;
         FinishDate = finishDate;
     };
-    Notes(String  Content,String type,int totalTime,String unitOfTime,int haveFinishMinutes,String frequency){
+    public Notes(String  Content,String type,int totalTime,String unitOfTime,int haveFinishMinutes,String frequency){
         NotesContent = Content;
         NotesType = type;
         TotalTime = totalTime;
@@ -42,7 +41,7 @@ public class Notes implements Serializable {
         HaveFinishMinutes = haveFinishMinutes;
         WorkFrequency = frequency;
     };
-    Notes (String Content,String type){
+    public Notes (String Content,String type){
         NotesContent = Content;
         NotesType = type;
     };
@@ -63,11 +62,11 @@ public class Notes implements Serializable {
         NotesType = type;
     }
 
-    public int getTotalTime() {
+    public float getTotalTime() {
         return TotalTime;
     }
 
-    public void setTotalTime(int totalTime) {
+    public void setTotalTime(float totalTime) {
         TotalTime = totalTime;
     }
 
@@ -111,7 +110,7 @@ public class Notes implements Serializable {
         NotesType = notesType;
     }
 
-    public int getHaveFinishMinutes() {
+    public float getHaveFinishMinutes() {
         return HaveFinishMinutes;
     }
 
@@ -119,7 +118,7 @@ public class Notes implements Serializable {
         HaveFinishMinutes = haveFinishMinutes;
     }
 
-    public int getResMinutes() {
+    public float getResMinutes() {
         return ResMinutes;
     }
 

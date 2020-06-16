@@ -1,4 +1,4 @@
-package com.example.studyapp;
+package com.example.studyapp.UI;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -9,6 +9,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.studyapp.BBL.Fragment_mine;
+import com.example.studyapp.BBL.Fragment_notes;
+import com.example.studyapp.BBL.Fragment_record;
+import com.example.studyapp.BBL.Fragment_tomato;
+import com.example.studyapp.DAL.DatabaseHelper;
+import com.example.studyapp.R;
 
 import java.util.ArrayList;
 import java.util.List;

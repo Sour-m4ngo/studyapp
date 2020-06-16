@@ -5,4 +5,12 @@
     <color name="colorAccent">#D81B60</color>
     <color name="TabColor">#FFB6C1</color>
     <color name="TabColor_un">#DC143C</color>
+
+    <color name="c1">#53868B</color>
+    <color name="c2">#5CACEE</color>
+    <color name="c3">#EEC900</color>
+    <color name="c4">#97FFFF</color>
+    <color name="c5">#AB82FF</color>
+    <color name="c6">#B8860B</color>
+    <color name="c7">#888888</color>
 </resources>

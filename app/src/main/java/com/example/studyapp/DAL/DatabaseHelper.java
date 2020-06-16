@@ -1,4 +1,4 @@
-package com.example.studyapp;
+package com.example.studyapp.DAL;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,8 +18,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d(TAG,"创建数据库...");
         //创建字段
         //sql: create table table_name(date varchar,time integer,times integer);
-        String sql1 = "create table "+ Constants.TABLE_NAME+"(Years integer,Months integer,Days integer,time integer,times integer,CtnDays integer,Credits integer)";
-        String sql2 = "create table "+ Constants.TO_DO_ITEM+"(Type string,Content string,Totaltime integer,HaveFinishedtime integer,FinishYears integer,FinishMonths integer,FinishDays integer,Frequency string,UnitOfTime string)";
+        String sql1 = "create table "+ Constants.TABLE_NAME+"(Years integer,Months integer,Days integer,time integer,times integer,CtnDays integer,iscal integer,Credits double)";
+        String sql2 = "create table "+ Constants.TO_DO_ITEM+"(Type string,Content string,Totaltime float,HaveFinishedtime float,FinishYears integer,FinishMonths integer,FinishDays integer,Frequency string,UnitOfTime string)";
         //FnlYears integer,FnlMonths integer,FnlDays integer,
         db.execSQL(sql1);
         db.execSQL(sql2);
